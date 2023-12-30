@@ -27,11 +27,10 @@ public class Report {
     @Column(name = "reportTrainerMessage", nullable = true, length = 400)
     private String reportTrainerMessage;
     @Basic
-    @Column(name = "reportClientId", nullable = false)
-    private int reportClientId;
-    @Basic
     @Column(name = "reportDate", nullable = false)
     private Date reportDate;
 
-
+    @ManyToOne
+    @JoinColumn(name = "reportClientId", referencedColumnName = "clientId")
+    private Client client;
 }

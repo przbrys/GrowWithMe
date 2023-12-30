@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,19 +22,32 @@ public class Client {
     @Column(name = "clientId", nullable = false)
     private int clientId;
     @Basic
-    @Column(name = "clientUserId", nullable = false)
-    private int clientUserId;
-    @Basic
-    @Column(name = "clientTtrainerId", nullable = false)
-    private int clientTtrainerId;
-    @Basic
-    @Column(name = "clientTrainerId", nullable = false)
-    private int clientTrainerId;
-    @Basic
     @Column(name = "clientHeight", nullable = false)
     private int clientHeight;
     @Basic
     @Column(name = "clientPhoneNumber", nullable = true)
     private Integer clientPhoneNumber;
 
+    @OneToOne
+    @JoinColumn(name = "clientUserId", referencedColumnName = "userId")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "clientTrainerId", referencedColumnName = "trainerId")
+    private Trainer trainer;
+
+    @OneToMany(mappedBy = "client")
+    private List<BodyInformation> bodyInformationList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client")
+    private List<Report> reportsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client")
+    private List<Survey> surveyList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client")
+    private List<DietPlan> dietPlanList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client")
+    private List<TrainingPlan> trainingPlanList = new ArrayList<>();
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,9 +22,13 @@ public class Trainer {
     @Column(name = "trainerId", nullable = false)
     private int trainerId;
     @Basic
-    @Column(name = "trainerUserId", nullable = false)
-    private int trainerUserId;
-    @Basic
     @Column(name = "trainerPhoneNumber", nullable = false)
     private int trainerPhoneNumber;
+
+    @OneToOne
+    @JoinColumn(name = "trainerUserId", referencedColumnName = "userId")
+    private User user;
+
+    @OneToMany(mappedBy = "trainer")
+    private List<Client> clientList = new ArrayList<>();
 }

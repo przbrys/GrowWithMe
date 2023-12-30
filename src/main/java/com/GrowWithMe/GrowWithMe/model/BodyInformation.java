@@ -41,10 +41,10 @@ public class BodyInformation {
     @Column(name = "bodyInformationCalfMeasurement", nullable = false)
     private int bodyInformationCalfMeasurement;
     @Basic
-    @Column(name = "bodyInformationClientId", nullable = false)
-    private int bodyInformationClientId;
-    @Basic
     @Column(name = "bodyTrainerAdditionalInformation", nullable = true, length = 1000)
     private String bodyTrainerAdditionalInformation;
 
+    @ManyToOne
+    @JoinColumn(name = "bodyInformationClientId", referencedColumnName = "clientId")
+    private Client client;
 }

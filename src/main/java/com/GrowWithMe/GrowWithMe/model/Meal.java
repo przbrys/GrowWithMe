@@ -37,5 +37,4 @@ public class Meal {
     @Basic
     @Column(name = "mealPhotoURL", nullable = true, length = 300)
     private String mealPhotoUrl;
-
 }
