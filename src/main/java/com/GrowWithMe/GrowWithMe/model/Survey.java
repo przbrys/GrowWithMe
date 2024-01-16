@@ -21,7 +21,7 @@ public class Survey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "surveyId", nullable = false)
-    private int surveyId;
+    private Integer surveyId;
     @Basic
     @Column(name = "surveyName", nullable = false, length = 60)
     private String surveyName;

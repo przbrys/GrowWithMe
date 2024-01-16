@@ -20,10 +20,10 @@ public class Trainer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "trainerId", nullable = false)
-    private int trainerId;
+    private Integer trainerId;
     @Basic
     @Column(name = "trainerPhoneNumber", nullable = false)
-    private int trainerPhoneNumber;
+    private Integer trainerPhoneNumber;
 
     @OneToOne
     @JoinColumn(name = "trainerUserId", referencedColumnName = "userId")

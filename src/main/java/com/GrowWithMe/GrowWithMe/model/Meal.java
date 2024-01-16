@@ -18,13 +18,13 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "mealId", nullable = false)
-    private int mealId;
+    private Integer mealId;
     @Basic
     @Column(name = "mealName", nullable = true, length = 100)
     private String mealName;
     @Basic
     @Column(name = "mealCaloricValue", nullable = false)
-    private int mealCaloricValue;
+    private Integer mealCaloricValue;
     @Basic
     @Column(name = "mealMacroElements", nullable = false, length = 100)
     private String mealMacroElements;

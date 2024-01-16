@@ -18,28 +18,28 @@ public class BodyInformation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "bodyInformationId", nullable = false)
-    private int bodyInformationId;
+    private Integer bodyInformationId;
     @Basic
     @Column(name = "bodyInformationWeight", nullable = false)
-    private int bodyInformationWeight;
+    private Integer bodyInformationWeight;
     @Basic
     @Column(name = "bodyInformationBodyFat", nullable = false)
-    private int bodyInformationBodyFat;
+    private Integer bodyInformationBodyFat;
     @Basic
     @Column(name = "bodyInformationsChestMeasurement", nullable = false)
-    private int bodyInformationsChestMeasurement;
+    private Integer bodyInformationsChestMeasurement;
     @Basic
     @Column(name = "bodyInformationLegMeasurement", nullable = false)
-    private int bodyInformationLegMeasurement;
+    private Integer bodyInformationLegMeasurement;
     @Basic
     @Column(name = "bodyInformationBicepsMeasurement", nullable = false)
-    private int bodyInformationBicepsMeasurement;
+    private Integer bodyInformationBicepsMeasurement;
     @Basic
     @Column(name = "bodyInformationWaistMeasurement", nullable = false)
-    private int bodyInformationWaistMeasurement;
+    private Integer bodyInformationWaistMeasurement;
     @Basic
     @Column(name = "bodyInformationCalfMeasurement", nullable = false)
-    private int bodyInformationCalfMeasurement;
+    private Integer bodyInformationCalfMeasurement;
     @Basic
     @Column(name = "bodyTrainerAdditionalInformation", nullable = true, length = 1000)
     private String bodyTrainerAdditionalInformation;

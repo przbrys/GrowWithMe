@@ -21,7 +21,7 @@ public class DietPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "dietPlanId", nullable = false)
-    private int dietPlanId;
+    private Integer dietPlanId;
     @Basic
     @Column(name = "dietPlanName", nullable = false, length = 100)
     private String dietPlanName;

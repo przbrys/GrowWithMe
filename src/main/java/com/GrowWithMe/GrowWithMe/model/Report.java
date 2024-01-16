@@ -19,7 +19,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "reportId", nullable = false)
-    private int reportId;
+    private Integer reportId;
     @Basic
     @Column(name = "reportClientMessage", nullable = false, length = 400)
     private String reportClientMessage;

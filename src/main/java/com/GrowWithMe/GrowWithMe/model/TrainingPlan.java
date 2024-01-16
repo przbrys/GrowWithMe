@@ -21,10 +21,10 @@ public class TrainingPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "trainingPlanId", nullable = false)
-    private int trainingPlanId;
+    private Integer trainingPlanId;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trainingPlanName", nullable = false)
-    private int trainingPlanName;
+    private Integer trainingPlanName;
 
     @ManyToOne
     @JoinColumn(name = "trainingClientId", referencedColumnName = "clientId")

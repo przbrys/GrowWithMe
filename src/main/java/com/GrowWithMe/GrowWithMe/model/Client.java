@@ -20,10 +20,10 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "clientId", nullable = false)
-    private int clientId;
+    private Integer clientId;
     @Basic
     @Column(name = "clientHeight", nullable = false)
-    private int clientHeight;
+    private Integer clientHeight;
     @Basic
     @Column(name = "clientPhoneNumber", nullable = true)
     private Integer clientPhoneNumber;
