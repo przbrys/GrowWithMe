@@ -45,10 +45,10 @@ public class BodyInformationController {
         }
         }
 
-    @PutMapping("/{id}/bodyTrainerAdditionalInformation")
-    public ResponseEntity<BodyInformation> updateBodyTrainerAdditionalInformation(@PathVariable Integer id, @RequestParam String bodyTrainerAdditionalInformation){
+    @PatchMapping("/{id}/bodyTrainerAdditionalInformation")
+    public ResponseEntity<BodyInformation> updateBodyTrainerAdditionalInformation(@RequestBody BodyInformation bodyTrainerAdditionalInformation){
         try {
-            BodyInformation updatedBodInformation=bodyInformationService.updateBodyTrainerAdditionalInformation(id,bodyTrainerAdditionalInformation);
+            BodyInformation updatedBodInformation=bodyInformationService.updateBodyTrainerAdditionalInformation(bodyTrainerAdditionalInformation);
             return new ResponseEntity<>(updatedBodInformation, HttpStatus.OK);
         }catch (EntityNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -36,7 +36,6 @@ public class BodyInformationService implements IBodyInformationService {
         } catch (Exception e) {
             throw new RuntimeException("Error deleting BodyInformation", e);
         }
-
     }
 
     @Override
@@ -49,15 +48,14 @@ public class BodyInformationService implements IBodyInformationService {
         }
     }
     @Override
-    public BodyInformation updateBodyTrainerAdditionalInformation(Integer bodyInformationId, String bodyTrainerAdditionalInformation) {
-        Optional<BodyInformation> bodyInformationOptional = bodyInformationRepository.findById(bodyInformationId);
-
+    public BodyInformation updateBodyTrainerAdditionalInformation(BodyInformation bodyTrainerAdditionalInformation) {
+        Optional<BodyInformation> bodyInformationOptional = bodyInformationRepository.findById(bodyTrainerAdditionalInformation.getBodyInformationId());
         if (bodyInformationOptional.isPresent()) {
             BodyInformation bodyInformation = bodyInformationOptional.get();
-            bodyInformation.setBodyTrainerAdditionalInformation(bodyTrainerAdditionalInformation);
+            bodyInformation.setBodyTrainerAdditionalInformation(bodyTrainerAdditionalInformation.getBodyTrainerAdditionalInformation());
             return bodyInformationRepository.save(bodyInformation);
         } else {
-            throw new EntityNotFoundException("BodyInformation entity with id " + bodyInformationId + " not found");
+            throw new EntityNotFoundException("BodyInformation entity with id " + bodyTrainerAdditionalInformation.getBodyInformationId() + " not found");
         }
     }
 }

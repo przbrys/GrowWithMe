@@ -1,8 +1,10 @@
 package com.GrowWithMe.GrowWithMe.controller;
 
+import com.GrowWithMe.GrowWithMe.model.BodyInformation;
 import com.GrowWithMe.GrowWithMe.model.User;
 import com.GrowWithMe.GrowWithMe.service.IUserService;
 import com.GrowWithMe.GrowWithMe.service.impl.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -34,5 +36,25 @@ public class UserController {
     public ResponseEntity<User> createUserEntity(@RequestBody User user) {
         User createdNewUser = userService.createUserEntity(user);
         return new ResponseEntity<>(createdNewUser,HttpStatus.OK);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteUserEntity(@PathVariable Integer id)
+    {
+        try {
+            userService.deleteUser(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/{id}/newPassword")
+    public ResponseEntity<User> updateUserPassword(@PathVariable Integer id,@RequestBody User userWithNewPassword){
+        try {
+            User userUpdated=userService.updateUserPassword(id,userWithNewPassword.getUserPassword());
+            return new ResponseEntity<>(userUpdated, HttpStatus.OK);
+        }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
