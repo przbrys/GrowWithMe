@@ -25,7 +25,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void deleteUser(Integer userId) {
+    public void deleteUserEntity(Integer userId) {
         try {
             userRepository.deleteById(userId);
         }catch (EmptyResultDataAccessException e) {

@@ -38,7 +38,7 @@ public class BodyInformationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBodyInformationEntity(@PathVariable Integer id){
         try {
-            bodyInformationService.deleteBodyInformation(id);
+            bodyInformationService.deleteBodyInformationEntity(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -1,6 +1,5 @@
 package com.GrowWithMe.GrowWithMe.controller;
 
-import com.GrowWithMe.GrowWithMe.model.BodyInformation;
 import com.GrowWithMe.GrowWithMe.model.Exercise;
 import com.GrowWithMe.GrowWithMe.service.impl.ExerciseService;
 import jakarta.persistence.EntityNotFoundException;
@@ -8,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +34,7 @@ public class ExerciseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExerciseEntity(@PathVariable Integer id){
         try {
-            exerciseService.deleteExercise(id);
+            exerciseService.deleteExerciseEntity(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

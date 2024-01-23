@@ -1,12 +1,8 @@
 package com.GrowWithMe.GrowWithMe.controller;
-
-import com.GrowWithMe.GrowWithMe.model.BodyInformation;
 import com.GrowWithMe.GrowWithMe.model.User;
-import com.GrowWithMe.GrowWithMe.service.IUserService;
 import com.GrowWithMe.GrowWithMe.service.impl.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +37,7 @@ public class UserController {
     public ResponseEntity<Void> deleteUserEntity(@PathVariable Integer id)
     {
         try {
-            userService.deleteUser(id);
+            userService.deleteUserEntity(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

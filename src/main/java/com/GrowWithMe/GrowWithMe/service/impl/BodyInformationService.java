@@ -28,7 +28,7 @@ public class BodyInformationService implements IBodyInformationService {
     }
 
     @Override
-    public void deleteBodyInformation(Integer bodyInformationId) {
+    public void deleteBodyInformationEntity(Integer bodyInformationId) {
         try {
             bodyInformationRepository.deleteById(bodyInformationId);
         }catch (EmptyResultDataAccessException e) {

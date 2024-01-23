@@ -1,6 +1,4 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
-
-import com.GrowWithMe.GrowWithMe.model.BodyInformation;
 import com.GrowWithMe.GrowWithMe.model.Exercise;
 import com.GrowWithMe.GrowWithMe.repository.IExerciseRepository;
 import com.GrowWithMe.GrowWithMe.service.IExerciseService;
@@ -24,7 +22,7 @@ public class ExerciseService implements IExerciseService {
     }
 
     @Override
-    public void deleteExercise(Integer exerciseId) {
+    public void deleteExerciseEntity(Integer exerciseId) {
         try {
             exerciseRepository.deleteById(exerciseId);
         }catch (EmptyResultDataAccessException e) {
@@ -48,6 +46,7 @@ public class ExerciseService implements IExerciseService {
     public Exercise updateExercise(Exercise exerciseToUpdate) {
         Optional<Exercise> exerciseOptional =exerciseRepository.findById(exerciseToUpdate.getExerciseId());
         if (exerciseOptional.isPresent()) {
+            exerciseRepository.save(exerciseToUpdate);
             return exerciseRepository.save(exerciseToUpdate);
         } else {
             throw new EntityNotFoundException("Exercise entity with id " + exerciseToUpdate.getExerciseId() + " not found, update failed");

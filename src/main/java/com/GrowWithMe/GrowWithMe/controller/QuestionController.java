@@ -1,8 +1,5 @@
 package com.GrowWithMe.GrowWithMe.controller;
-
-import com.GrowWithMe.GrowWithMe.model.Exercise;
 import com.GrowWithMe.GrowWithMe.model.Question;
-import com.GrowWithMe.GrowWithMe.repository.IQuestionRepository;
 import com.GrowWithMe.GrowWithMe.service.impl.QuestionService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

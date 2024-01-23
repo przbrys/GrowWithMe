@@ -1,6 +1,4 @@
 package com.GrowWithMe.GrowWithMe.controller;
-
-import com.GrowWithMe.GrowWithMe.model.Exercise;
 import com.GrowWithMe.GrowWithMe.model.Meal;
 import com.GrowWithMe.GrowWithMe.service.impl.MealService;
 import jakarta.persistence.EntityNotFoundException;

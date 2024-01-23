@@ -1,7 +1,4 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
-
-import com.GrowWithMe.GrowWithMe.model.BodyInformation;
-import com.GrowWithMe.GrowWithMe.model.Exercise;
 import com.GrowWithMe.GrowWithMe.model.Meal;
 import com.GrowWithMe.GrowWithMe.repository.IMealRepository;
 import com.GrowWithMe.GrowWithMe.service.IMealService;
