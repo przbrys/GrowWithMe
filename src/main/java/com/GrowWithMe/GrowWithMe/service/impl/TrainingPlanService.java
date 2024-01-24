@@ -15,6 +15,7 @@ import java.util.Optional;
 public class TrainingPlanService implements ITrainingPlanService {
     @Autowired
     private ITrainingPlanRepository trainingPlanRepository;
+
     @Override
     public List<TrainingPlan> getAllTrainingPlan() {
         return trainingPlanRepository.findAll();
@@ -34,7 +35,7 @@ public class TrainingPlanService implements ITrainingPlanService {
     public void deleteTrainingPlanEntity(Integer trainingPlanId) {
         try {
             trainingPlanRepository.deleteById(trainingPlanId);
-        }catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException("TrainingPlan entity with id " + trainingPlanId + " not found", e);
         } catch (Exception e) {
             throw new RuntimeException("Error deleting TrainingPlan", e);
@@ -47,14 +48,14 @@ public class TrainingPlanService implements ITrainingPlanService {
             trainingPlan.setExerciseList(exerciseList);
             trainingPlanRepository.save(trainingPlan);
             return trainingPlan;
-        }catch (Exception e){
-            throw new RuntimeException("Error in creating new TrainingPlan.",e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error in creating new TrainingPlan.", e);
         }
     }
 
     @Override
     public TrainingPlan updateTrainingPlan(TrainingPlan trainingPlanToUpdate) {
-        Optional<TrainingPlan> trainingPlanOptional =trainingPlanRepository.findById(trainingPlanToUpdate.getTrainingPlanId());
+        Optional<TrainingPlan> trainingPlanOptional = trainingPlanRepository.findById(trainingPlanToUpdate.getTrainingPlanId());
         if (trainingPlanOptional.isPresent()) {
             trainingPlanRepository.save(trainingPlanToUpdate);
             return trainingPlanRepository.save(trainingPlanToUpdate);

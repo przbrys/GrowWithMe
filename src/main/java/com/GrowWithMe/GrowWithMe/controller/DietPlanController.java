@@ -1,0 +1,59 @@
+package com.GrowWithMe.GrowWithMe.controller;
+
+import com.GrowWithMe.GrowWithMe.model.Client;
+import com.GrowWithMe.GrowWithMe.model.DietPlan;
+import com.GrowWithMe.GrowWithMe.model.Meal;
+import com.GrowWithMe.GrowWithMe.service.impl.DietPlanService;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/DietPlan")
+public class DietPlanController {
+    @Autowired
+    private DietPlanService dietPlanService;
+
+    @GetMapping("/allDietPlan")
+    public ResponseEntity<List<DietPlan>> getAllDietPlan(){
+        List<DietPlan> dietPlanList=dietPlanService.getAllDietPlan();
+        return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+
+    }
+    @GetMapping("/allClientDietPlan")
+    public ResponseEntity<List<DietPlan>> getAllClientDietPlan(@RequestBody Client client){
+        List<DietPlan> dietPlanList=dietPlanService.getAllClientDietPlan(client);
+        return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+    }
+    @PostMapping("/create")
+    public ResponseEntity<DietPlan> createDietPlanEntity(@RequestBody DietPlan dietPlan,@RequestBody List<Meal> mealList){
+        try{
+            DietPlan dietPlanToCreate=dietPlanService.createDietPlanEntity(dietPlan, mealList);
+            return new ResponseEntity<>(dietPlanToCreate,HttpStatus.CREATED);
+        }catch(IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDietPlanEntity(@PathVariable Integer id){
+        try {
+            dietPlanService.deleteDietPlanEntity(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @PatchMapping("/updateDietPlan")
+    public ResponseEntity<DietPlan> updateDietPlan(@RequestBody DietPlan dietPlanToUpdate){
+        try {
+            DietPlan updatedDietPlan = dietPlanService.updateDietPlan(dietPlanToUpdate);
+            return new ResponseEntity<>(updatedDietPlan, HttpStatus.OK);
+        }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+}
