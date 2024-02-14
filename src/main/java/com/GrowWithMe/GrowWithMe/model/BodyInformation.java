@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.util.Objects;
 
 @Entity
-@Table(name = "bodyinformations", schema = "mydb", catalog = "")
+@Table(name = "bodyinformations", schema = "mydb")
 @Getter
 @Setter
 @ToString
@@ -26,7 +26,7 @@ public class BodyInformation {
     @Column(name = "bodyInformationBodyFat", nullable = false)
     private Integer bodyInformationBodyFat;
     @Basic
-    @Column(name = "bodyInformationsChestMeasurement", nullable = false)
+    @Column(name = "bodyInformationChestMeasurement", nullable = false)
     private Integer bodyInformationsChestMeasurement;
     @Basic
     @Column(name = "bodyInformationLegMeasurement", nullable = false)

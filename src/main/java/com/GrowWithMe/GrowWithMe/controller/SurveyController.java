@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Survey")
@@ -22,10 +23,15 @@ public class SurveyController {
         return new ResponseEntity<>(surveyList,surveyList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
     }
 
-    @GetMapping("/allClientSurvey")
-    public ResponseEntity<List<Survey>> getAllClientSurvey(Client client){
-        List<Survey> surveyList=surveyService.getAllClientSurvey(client);
-        return new ResponseEntity<>(surveyList,surveyList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
+//    @GetMapping("/allClientSurvey")
+//    public ResponseEntity<List<Survey>> getAllClientSurvey(Client client){
+//        List<Survey> surveyList=surveyService.getAllClientSurvey(client);
+//        return new ResponseEntity<>(surveyList,surveyList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
+//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Survey> getSurveyById(@PathVariable Integer id){
+        Optional<Survey> surveyOptional= surveyService.getSurveyById(id);
+        return surveyOptional.map(survey -> new ResponseEntity<>(survey, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PostMapping("/create")
     public ResponseEntity<Survey> createSurveyEntity(@RequestBody Survey survey,@RequestBody List<Question> questionList){

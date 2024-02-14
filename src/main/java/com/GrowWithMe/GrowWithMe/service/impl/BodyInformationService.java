@@ -1,6 +1,7 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
 
 import com.GrowWithMe.GrowWithMe.model.BodyInformation;
+import com.GrowWithMe.GrowWithMe.model.Client;
 import com.GrowWithMe.GrowWithMe.repository.IBodyInformationRepository;
 import com.GrowWithMe.GrowWithMe.service.IBodyInformationService;
 import jakarta.persistence.EntityNotFoundException;

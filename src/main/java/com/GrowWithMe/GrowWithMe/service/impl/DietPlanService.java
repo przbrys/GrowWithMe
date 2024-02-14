@@ -23,10 +23,10 @@ public class DietPlanService implements IDietPlanService {
         return dietPlanRepository.findAll();
     }
 
-    @Override
-    public List<DietPlan> getAllClientDietPlan(Client client) {
-        return dietPlanRepository.findByClient(client);
-    }
+//    @Override
+//    public List<DietPlan> getAllClientDietPlan(Client client) {
+//        return dietPlanRepository.findByClient(client);
+//    }
 
     @Override
     public Optional<DietPlan> getDietPlanById(Integer dietPlanId) {
@@ -59,7 +59,6 @@ public class DietPlanService implements IDietPlanService {
     public DietPlan updateDietPlan(DietPlan dietPlanToUpdate) {
         Optional<DietPlan> dietPlanOptional = dietPlanRepository.findById(dietPlanToUpdate.getDietPlanId());
         if (dietPlanOptional.isPresent()) {
-            dietPlanRepository.save(dietPlanToUpdate);
             return dietPlanRepository.save(dietPlanToUpdate);
         } else {
             throw new EntityNotFoundException("DietPlan entity with id " + dietPlanToUpdate.getDietPlanId() + " not found, update failed");

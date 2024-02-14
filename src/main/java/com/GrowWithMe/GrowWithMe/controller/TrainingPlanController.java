@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/TrainingPlan")
@@ -23,10 +24,15 @@ public class TrainingPlanController {
         List<TrainingPlan> trainingPlanList=trainingPlanService.getAllTrainingPlan();
         return new ResponseEntity<>(trainingPlanList, trainingPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
-    @GetMapping("/allClientTrainingPlan")
-    public ResponseEntity<List<TrainingPlan>> getAllClientTrainingPlan(@RequestBody Client client){
-        List<TrainingPlan> trainingPlanList=trainingPlanService.getAllClientTrainingPlan(client);
-        return new ResponseEntity<>(trainingPlanList, trainingPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+//    @GetMapping("/allClientTrainingPlan")
+//    public ResponseEntity<List<TrainingPlan>> getAllClientTrainingPlan(@RequestBody Client client){
+//        List<TrainingPlan> trainingPlanList=trainingPlanService.getAllClientTrainingPlan(client);
+//        return new ResponseEntity<>(trainingPlanList, trainingPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<TrainingPlan> getTrainingPlanById(@PathVariable Integer id){
+        Optional<TrainingPlan> trainingPlanOptional= trainingPlanService.getTrainingPlanById(id);
+        return trainingPlanOptional.map(trainingPlan -> new ResponseEntity<>(trainingPlan, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PostMapping("/create")
     public ResponseEntity<TrainingPlan> createTrainingPlanEntity(@RequestBody TrainingPlan trainingPlan, @RequestBody List<Exercise> exerciseList){

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface IUserService {
     List<User> getAllUser();
-    Optional<User> getUserId(Integer userId);
+    Optional<User> getUserById(Integer userId);
     void deleteUserEntity(Integer userId);
     User createUserEntity(User user);
     User updateUserPassword(Integer userId, String userNewPassword);

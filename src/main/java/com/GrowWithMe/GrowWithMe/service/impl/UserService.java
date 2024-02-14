@@ -20,7 +20,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<User> getUserId(Integer userId) {
+    public Optional<User> getUserById(Integer userId) {
         return userRepository.findById(userId);
     }
 

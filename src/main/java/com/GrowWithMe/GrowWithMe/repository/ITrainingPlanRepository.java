@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface ITrainingPlanRepository extends JpaRepository<TrainingPlan, Integer> {
     List<TrainingPlan> findByClient(Client client);
-
 }

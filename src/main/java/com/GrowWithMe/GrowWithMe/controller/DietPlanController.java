@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/DietPlan")
@@ -24,10 +25,15 @@ public class DietPlanController {
         return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 
     }
-    @GetMapping("/allClientDietPlan")
-    public ResponseEntity<List<DietPlan>> getAllClientDietPlan(@RequestBody Client client){
-        List<DietPlan> dietPlanList=dietPlanService.getAllClientDietPlan(client);
-        return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+//    @GetMapping("/allClientDietPlan")
+//    public ResponseEntity<List<DietPlan>> getAllClientDietPlan(@RequestBody Client client){
+//        List<DietPlan> dietPlanList=dietPlanService.getAllClientDietPlan(client);
+//        return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<DietPlan> getDietPlanById(@PathVariable Integer id){
+        Optional<DietPlan> dietPlanOptional= dietPlanService.getDietPlanById(id);
+        return dietPlanOptional.map(dietPlan -> new ResponseEntity<>(dietPlan, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PostMapping("/create")
     public ResponseEntity<DietPlan> createDietPlanEntity(@RequestBody DietPlan dietPlan,@RequestBody List<Meal> mealList){

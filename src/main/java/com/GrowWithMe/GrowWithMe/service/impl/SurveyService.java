@@ -23,10 +23,10 @@ public class SurveyService implements ISurveyService{
         return surveyRepository.findAll();
     }
 
-    @Override
-    public List<Survey> getAllClientSurvey(Client client) {
-        return surveyRepository.findByClient(client);
-    }
+//    @Override
+//    public List<Survey> getAllClientSurvey(Client client) {
+//        return surveyRepository.findByClient(client);
+//    }
 
     @Override
     public Optional<Survey> getSurveyById(Integer surveyId) {
@@ -59,7 +59,6 @@ public class SurveyService implements ISurveyService{
     public Survey updateSurvey(Survey surveyToUpdate) {
         Optional<Survey> surveyOptional =surveyRepository.findById(surveyToUpdate.getSurveyId());
         if (surveyOptional.isPresent()) {
-            surveyRepository.save(surveyToUpdate);
             return surveyRepository.save(surveyToUpdate);
         } else {
             throw new EntityNotFoundException("Survey entity with id " + surveyToUpdate.getSurveyId() + " not found, update failed");

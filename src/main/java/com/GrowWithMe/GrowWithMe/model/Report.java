@@ -10,7 +10,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "reports", schema = "mydb", catalog = "")
+@Table(name = "reports", schema = "mydb")
 @Getter
 @Setter
 @ToString

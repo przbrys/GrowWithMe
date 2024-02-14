@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "trainers", schema = "mydb", catalog = "")
+@Table(name = "trainers", schema = "mydb")
 @Getter
 @Setter
 @ToString

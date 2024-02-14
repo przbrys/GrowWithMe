@@ -21,10 +21,10 @@ public class TrainingPlanService implements ITrainingPlanService {
         return trainingPlanRepository.findAll();
     }
 
-    @Override
-    public List<TrainingPlan> getAllClientTrainingPlan(Client client) {
-        return trainingPlanRepository.findByClient(client);
-    }
+//    @Override
+//    public List<TrainingPlan> getAllClientTrainingPlan(Client client) {
+//        return trainingPlanRepository.findByClient(client);
+//    }
 
     @Override
     public Optional<TrainingPlan> getTrainingPlanById(Integer trainingPlanId) {
@@ -57,7 +57,6 @@ public class TrainingPlanService implements ITrainingPlanService {
     public TrainingPlan updateTrainingPlan(TrainingPlan trainingPlanToUpdate) {
         Optional<TrainingPlan> trainingPlanOptional = trainingPlanRepository.findById(trainingPlanToUpdate.getTrainingPlanId());
         if (trainingPlanOptional.isPresent()) {
-            trainingPlanRepository.save(trainingPlanToUpdate);
             return trainingPlanRepository.save(trainingPlanToUpdate);
         } else {
             throw new EntityNotFoundException("TrainingPlan entity with id " + trainingPlanToUpdate.getTrainingPlanId() + " not found, update failed");

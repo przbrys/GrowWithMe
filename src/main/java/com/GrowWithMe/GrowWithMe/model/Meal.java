@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.util.Objects;
 
 @Entity
-@Table(name = "meals", schema = "mydb", catalog = "")
+@Table(name = "meals", schema = "mydb")
 @Getter
 @Setter
 @ToString

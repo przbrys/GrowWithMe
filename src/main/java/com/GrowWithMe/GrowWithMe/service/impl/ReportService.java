@@ -49,7 +49,6 @@ public class ReportService implements IReportService{
     public Report updateReport(Report reportToUpdate) {
         Optional<Report> reportOptional =reportRepository.findById(reportToUpdate.getReportId());
         if (reportOptional.isPresent()) {
-            reportRepository.save(reportToUpdate);
             return reportRepository.save(reportToUpdate);
         } else {
             throw new EntityNotFoundException("Report entity with id " + reportToUpdate.getReportId() + " not found, update failed");

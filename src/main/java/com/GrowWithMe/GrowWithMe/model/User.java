@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Objects;
-
 @Entity
-@Table(name = "users", schema = "mydb", catalog = "")
+@Table(name = "users", schema = "mydb")
 @Getter
 @Setter
 @ToString

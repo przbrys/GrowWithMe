@@ -46,7 +46,6 @@ public class ExerciseService implements IExerciseService {
     public Exercise updateExercise(Exercise exerciseToUpdate) {
         Optional<Exercise> exerciseOptional =exerciseRepository.findById(exerciseToUpdate.getExerciseId());
         if (exerciseOptional.isPresent()) {
-            exerciseRepository.save(exerciseToUpdate);
             return exerciseRepository.save(exerciseToUpdate);
         } else {
             throw new EntityNotFoundException("Exercise entity with id " + exerciseToUpdate.getExerciseId() + " not found, update failed");
