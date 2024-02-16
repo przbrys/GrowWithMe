@@ -45,11 +45,11 @@ public class BodyInformationController {
         }
         }
 
-    @PatchMapping("/{id}/bodyTrainerAdditionalInformation")
-    public ResponseEntity<BodyInformation> updateBodyTrainerAdditionalInformation(@RequestBody BodyInformation bodyTrainerAdditionalInformation){
+    @PatchMapping
+    public ResponseEntity<BodyInformation> updateBodyTrainerAdditionalInformation(@RequestBody BodyInformation bodyInformationToUpdate){
         try {
-            BodyInformation updatedBodInformation=bodyInformationService.updateBodyTrainerAdditionalInformation(bodyTrainerAdditionalInformation);
-            return new ResponseEntity<>(updatedBodInformation, HttpStatus.OK);
+            BodyInformation updatedBodyInformation=bodyInformationService.updateBodyInformation(bodyInformationToUpdate);
+            return new ResponseEntity<>(updatedBodyInformation, HttpStatus.OK);
         }catch (EntityNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

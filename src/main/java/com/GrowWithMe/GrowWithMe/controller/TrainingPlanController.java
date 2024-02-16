@@ -19,7 +19,7 @@ public class TrainingPlanController {
     @Autowired
     private TrainingPlanService trainingPlanService;
 
-    @GetMapping("/allTrainingPlan")
+    @GetMapping
     public ResponseEntity<List<TrainingPlan>> getAllTrainingPlan(){
         List<TrainingPlan> trainingPlanList=trainingPlanService.getAllTrainingPlan();
         return new ResponseEntity<>(trainingPlanList, trainingPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
@@ -34,10 +34,10 @@ public class TrainingPlanController {
         Optional<TrainingPlan> trainingPlanOptional= trainingPlanService.getTrainingPlanById(id);
         return trainingPlanOptional.map(trainingPlan -> new ResponseEntity<>(trainingPlan, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @PostMapping("/create")
-    public ResponseEntity<TrainingPlan> createTrainingPlanEntity(@RequestBody TrainingPlan trainingPlan, @RequestBody List<Exercise> exerciseList){
+    @PostMapping
+    public ResponseEntity<TrainingPlan> createTrainingPlanEntity(@RequestBody TrainingPlan trainingPlan){
         try{
-            TrainingPlan trainingPlanToCreate=trainingPlanService.createTrainingPlanEntity(trainingPlan, exerciseList);
+            TrainingPlan trainingPlanToCreate=trainingPlanService.createTrainingPlanEntity(trainingPlan);
             return new ResponseEntity<>(trainingPlanToCreate,HttpStatus.CREATED);
         }catch(IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -52,7 +52,7 @@ public class TrainingPlanController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/updateTrainingPlan")
+    @PatchMapping
     public ResponseEntity<TrainingPlan> updateTrainingPlan(@RequestBody TrainingPlan trainingPlanToUpdate){
         try {
             TrainingPlan updatedTrainingPlan = trainingPlanService.updateTrainingPlan(trainingPlanToUpdate);

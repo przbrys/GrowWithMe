@@ -1,5 +1,4 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
-import com.GrowWithMe.GrowWithMe.model.Client;
 import com.GrowWithMe.GrowWithMe.model.Exercise;
 import com.GrowWithMe.GrowWithMe.model.TrainingPlan;
 import com.GrowWithMe.GrowWithMe.repository.ITrainingPlanRepository;
@@ -43,11 +42,9 @@ public class TrainingPlanService implements ITrainingPlanService {
     }
 
     @Override
-    public TrainingPlan createTrainingPlanEntity(TrainingPlan trainingPlan, List<Exercise> exerciseList) {
+    public TrainingPlan createTrainingPlanEntity(TrainingPlan trainingPlan) {
         try {
-            trainingPlan.setExerciseList(exerciseList);
-            trainingPlanRepository.save(trainingPlan);
-            return trainingPlan;
+            return trainingPlanRepository.save(trainingPlan);
         } catch (Exception e) {
             throw new RuntimeException("Error in creating new TrainingPlan.", e);
         }

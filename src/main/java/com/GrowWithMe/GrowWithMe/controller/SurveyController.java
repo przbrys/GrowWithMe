@@ -17,7 +17,7 @@ public class SurveyController {
     @Autowired
     private SurveyService surveyService;
 
-    @GetMapping("/allSurvey")
+    @GetMapping
     public ResponseEntity<List<Survey>> getAllSurvey(){
         List<Survey> surveyList =surveyService.getAllSurvey();
         return new ResponseEntity<>(surveyList,surveyList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
@@ -33,10 +33,10 @@ public class SurveyController {
         Optional<Survey> surveyOptional= surveyService.getSurveyById(id);
         return surveyOptional.map(survey -> new ResponseEntity<>(survey, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @PostMapping("/create")
-    public ResponseEntity<Survey> createSurveyEntity(@RequestBody Survey survey,@RequestBody List<Question> questionList){
+    @PostMapping
+    public ResponseEntity<Survey> createSurveyEntity(@RequestBody Survey survey){
         try{
-            Survey surveyToCreate=surveyService.createSurveyEntity(survey, questionList);
+            Survey surveyToCreate=surveyService.createSurveyEntity(survey);
             return new ResponseEntity<>(surveyToCreate,HttpStatus.CREATED);
         }catch(IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -51,7 +51,7 @@ public class SurveyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/updateSurvey")
+    @PatchMapping
     public ResponseEntity<Survey> updateSurvey(@RequestBody Survey surveyToUpdate){
         try {
             Survey updatedSurvey = surveyService.updateSurvey(surveyToUpdate);

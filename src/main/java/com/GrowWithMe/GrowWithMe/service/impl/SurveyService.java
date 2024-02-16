@@ -1,6 +1,5 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
 
-import com.GrowWithMe.GrowWithMe.model.Client;
 import com.GrowWithMe.GrowWithMe.model.Question;
 import com.GrowWithMe.GrowWithMe.model.Survey;
 import com.GrowWithMe.GrowWithMe.repository.ISurveyRepository;
@@ -45,11 +44,9 @@ public class SurveyService implements ISurveyService{
     }
 
     @Override
-    public Survey createSurveyEntity(Survey survey, List<Question> questionList) {
+    public Survey createSurveyEntity(Survey survey) {
         try {
-            survey.setQuestionList(questionList);
-            surveyRepository.save(survey);
-            return survey;
+            return surveyRepository.save(survey);
         }catch (Exception e){
             throw new RuntimeException("Error in creating new Survey.",e);
         }

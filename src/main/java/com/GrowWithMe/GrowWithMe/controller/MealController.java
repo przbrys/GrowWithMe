@@ -40,7 +40,7 @@ public class MealController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/updateMeal")
+    @PatchMapping
     public ResponseEntity<Meal> updateMeal(@RequestBody Meal mealToUpdate){
         try {
             Meal updatedMeal = mealService.updateMealInformation(mealToUpdate);

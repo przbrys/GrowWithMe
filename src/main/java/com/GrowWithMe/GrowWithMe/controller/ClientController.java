@@ -17,7 +17,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping("/allClient")
+    @GetMapping
     public ResponseEntity<List<Client>> getAllClient() {
         List<Client> clientList=clientService.getAllClient();
         return new ResponseEntity<>(clientList, clientList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
@@ -52,7 +52,7 @@ public class ClientController {
         List<DietPlan> dietPlanList=clientService.getClientDietPlan(client);
         return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
     }
-    @GetMapping("/ClientTrainingPlan")
+    @GetMapping("/clientTrainingPlan")
     public ResponseEntity<List<TrainingPlan>> getClientTrainingPlan(@RequestBody Client client){
         List<TrainingPlan> trainingPlanList=clientService.getClientTrainingPlan(client);
         return new ResponseEntity<>(trainingPlanList, trainingPlanList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
@@ -66,7 +66,7 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Client> createClientEntity(@RequestBody Client client){
         try {
             Client clientToCreate = clientService.createClientEntity(client);
@@ -84,7 +84,7 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/{id}/ClientInfoFromUser")
+    @GetMapping("/{id}/clientInfoFromUser")
     public ResponseEntity<User> getClientInfoFromUser(@PathVariable Integer id){
         Optional<User> userOptional=clientService.getClientInfoFromUser(id);
         return userOptional.map(user -> new ResponseEntity<>(user,HttpStatus.OK)).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));

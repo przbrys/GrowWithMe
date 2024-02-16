@@ -1,12 +1,11 @@
 package com.GrowWithMe.GrowWithMe.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.Objects;
 
 @Entity
 @Table(name = "bodyinformations", schema = "mydb")
@@ -27,7 +26,7 @@ public class BodyInformation {
     private Integer bodyInformationBodyFat;
     @Basic
     @Column(name = "bodyInformationChestMeasurement", nullable = false)
-    private Integer bodyInformationsChestMeasurement;
+    private Integer bodyInformationChestMeasurement;
     @Basic
     @Column(name = "bodyInformationLegMeasurement", nullable = false)
     private Integer bodyInformationLegMeasurement;
@@ -45,6 +44,7 @@ public class BodyInformation {
     private String bodyTrainerAdditionalInformation;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "bodyInformationClientId", referencedColumnName = "clientId")
     private Client client;
 }

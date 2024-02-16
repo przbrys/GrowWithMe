@@ -11,5 +11,5 @@ public interface IBodyInformationService {
     Optional<BodyInformation> getBodyInformationById(Integer bodyInformationId);
     void deleteBodyInformationEntity(Integer bodyInformationId);
     BodyInformation createBodyInformationEntity(BodyInformation bodyInformation);
-    BodyInformation updateBodyTrainerAdditionalInformation(BodyInformation trainerAdditionalInformation);
+    BodyInformation updateBodyInformation(BodyInformation bodyInformationToUpdate);
 }

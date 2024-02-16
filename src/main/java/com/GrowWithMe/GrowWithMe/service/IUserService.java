@@ -8,5 +8,5 @@ public interface IUserService {
     Optional<User> getUserById(Integer userId);
     void deleteUserEntity(Integer userId);
     User createUserEntity(User user);
-    User updateUserPassword(Integer userId, String userNewPassword);
+    User updateUserPassword(User userToUpdate);
 }

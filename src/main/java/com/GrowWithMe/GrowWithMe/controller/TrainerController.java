@@ -18,7 +18,7 @@ public class TrainerController {
     @Autowired
     private TrainerService trainerService;
 
-    @GetMapping("/allTrainer")
+    @GetMapping
     public ResponseEntity<List<Trainer>> getAllTrainers() {
         List<Trainer> trainerList = trainerService.getAllTrainer();
         return new ResponseEntity<>(trainerList, trainerList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
@@ -36,7 +36,7 @@ public class TrainerController {
         return trainerOptional.map(trainer -> new ResponseEntity<>(trainer, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Trainer> createTrainerEntity(@RequestBody Trainer trainer) {
         try {
             Trainer trainerToCreate = trainerService.createTrainerEntity(trainer);
@@ -54,7 +54,7 @@ public class TrainerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/updateTrainer")
+    @PatchMapping
     public ResponseEntity<Trainer> updateTrainer(@RequestBody Trainer trainerToUpdate){
         try {
             Trainer updatedTrainer = trainerService.updateTrainer(trainerToUpdate);

@@ -1,6 +1,5 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
 
-import com.GrowWithMe.GrowWithMe.model.Client;
 import com.GrowWithMe.GrowWithMe.model.DietPlan;
 import com.GrowWithMe.GrowWithMe.model.Meal;
 import com.GrowWithMe.GrowWithMe.repository.IDietPlanRepository;
@@ -45,11 +44,9 @@ public class DietPlanService implements IDietPlanService {
     }
 
     @Override
-    public DietPlan createDietPlanEntity(DietPlan dietPlan, List<Meal> mealList) {
+    public DietPlan createDietPlanEntity(DietPlan dietPlan) {
         try {
-            dietPlan.setMealList(mealList);
-            dietPlanRepository.save(dietPlan);
-            return dietPlan;
+            return dietPlanRepository.save(dietPlan);
         } catch (Exception e) {
             throw new RuntimeException("Error in creating new DietPlan.", e);
         }

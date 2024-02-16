@@ -40,7 +40,7 @@ public class ExerciseController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/updateExercise")
+    @PatchMapping
     public ResponseEntity<Exercise> updateExercise(@RequestBody Exercise exerciseToUpdate){
         try {
             Exercise updatedExercise = exerciseService.updateExercise(exerciseToUpdate);

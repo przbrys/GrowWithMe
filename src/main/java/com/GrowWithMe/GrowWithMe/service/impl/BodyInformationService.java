@@ -1,7 +1,6 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
 
 import com.GrowWithMe.GrowWithMe.model.BodyInformation;
-import com.GrowWithMe.GrowWithMe.model.Client;
 import com.GrowWithMe.GrowWithMe.repository.IBodyInformationRepository;
 import com.GrowWithMe.GrowWithMe.service.IBodyInformationService;
 import jakarta.persistence.EntityNotFoundException;
@@ -49,14 +48,12 @@ public class BodyInformationService implements IBodyInformationService {
         }
     }
     @Override
-    public BodyInformation updateBodyTrainerAdditionalInformation(BodyInformation bodyTrainerAdditionalInformation) {
-        Optional<BodyInformation> bodyInformationOptional = bodyInformationRepository.findById(bodyTrainerAdditionalInformation.getBodyInformationId());
+    public BodyInformation updateBodyInformation(BodyInformation bodyInformationToUpdate) {
+        Optional<BodyInformation> bodyInformationOptional = bodyInformationRepository.findById(bodyInformationToUpdate.getBodyInformationId());
         if (bodyInformationOptional.isPresent()) {
-            BodyInformation bodyInformation = bodyInformationOptional.get();
-            bodyInformation.setBodyTrainerAdditionalInformation(bodyTrainerAdditionalInformation.getBodyTrainerAdditionalInformation());
-            return bodyInformationRepository.save(bodyInformation);
+            return bodyInformationRepository.save(bodyInformationToUpdate);
         } else {
-            throw new EntityNotFoundException("BodyInformation entity with id " + bodyTrainerAdditionalInformation.getBodyInformationId() + " not found");
+            throw new EntityNotFoundException("BodyInformation entity with id " + bodyInformationToUpdate.getBodyInformationId() + " not found");
         }
     }
 }

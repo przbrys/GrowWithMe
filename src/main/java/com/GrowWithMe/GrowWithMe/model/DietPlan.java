@@ -1,5 +1,6 @@
 package com.GrowWithMe.GrowWithMe.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -9,7 +10,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 @Entity
 @Table(name = "dietplans", schema = "mydb")
@@ -27,6 +28,7 @@ public class DietPlan {
     private String dietPlanName;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "dietPlanClientId", referencedColumnName = "clientId")
     private Client client;
 
@@ -34,6 +36,6 @@ public class DietPlan {
     @JoinTable(name = "mealsToDietPlans",
             joinColumns = @JoinColumn(name = "mealsToDietPlansMealId"),
             inverseJoinColumns = @JoinColumn(name = "mealsToDietPlansDietPlanId"))
-    @JsonIgnoreProperties("meals")
+    @JsonIgnoreProperties("meal")
     private List<Meal> mealList = new ArrayList<>();
 }

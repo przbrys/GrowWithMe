@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +25,16 @@ public class TrainerService implements ITrainerService {
 
     @Override
     public List<Client> getTrainerClient(Integer trainerId) {
-        Optional<Trainer> trainerOptional=trainerRepository.findById(trainerId);
-        if(trainerOptional.isPresent()){
-            Trainer trainer = trainerOptional.get();
-            return trainer.getClientList();
-        }else{
-            throw new EntityNotFoundException();
+        try {
+            Optional<Trainer> trainerOptional = trainerRepository.findById(trainerId);
+            if (trainerOptional.isPresent()) {
+                Trainer trainer = trainerOptional.get();
+                return trainer.getClientList();
+            }
+            return Collections.emptyList();
+
+        } catch (Exception e) {
+            throw new EntityNotFoundException("Trainer with id " + trainerId + "not found.");
         }
     }
 

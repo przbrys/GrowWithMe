@@ -1,5 +1,7 @@
 package com.GrowWithMe.GrowWithMe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -8,7 +10,6 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "trainers", schema = "mydb")
@@ -30,5 +31,6 @@ public class Trainer {
     private User user;
 
     @OneToMany(mappedBy = "trainer")
+    @JsonManagedReference
     private List<Client> clientList = new ArrayList<>();
 }

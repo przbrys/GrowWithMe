@@ -19,7 +19,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> userList=userService.getAllUser();
-        return new ResponseEntity<List<User>>(userList, userList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
+        return new ResponseEntity<>(userList, userList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -44,10 +44,10 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/{id}/newPassword")
-    public ResponseEntity<User> updateUserPassword(@PathVariable Integer id,@RequestBody User userWithNewPassword){
+    @PatchMapping
+    public ResponseEntity<User> updateUserPassword(@RequestBody User userWithNewPassword){
         try {
-            User userUpdated=userService.updateUserPassword(id,userWithNewPassword.getUserPassword());
+            User userUpdated=userService.updateUserPassword(userWithNewPassword);
             return new ResponseEntity<>(userUpdated, HttpStatus.OK);
         }catch (EntityNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

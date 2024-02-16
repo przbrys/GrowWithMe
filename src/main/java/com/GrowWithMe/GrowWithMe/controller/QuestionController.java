@@ -44,7 +44,7 @@ public class QuestionController {
         }
     }
 
-    @PatchMapping("/updateQuestion")
+    @PatchMapping
     public ResponseEntity<Question> updateQuestion(@RequestBody Question questionToUpdate){
         try {
             Question updatedQuestion = questionService.updateQuestion(questionToUpdate);
@@ -52,17 +52,5 @@ public class QuestionController {
         }catch (EntityNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
-
-    @PatchMapping("/{id}/updateQuestionClientAnswer")
-    public ResponseEntity<Question> updateQuestionClientAnswer(@PathVariable Integer id, @RequestParam String clientAnswer){
-        Optional<Question> questionOptional=questionService.getQuestionById(id);
-        if(questionOptional.isPresent()){
-           Question question=questionOptional.get();
-           question.setQuestionClientAnswer(clientAnswer);
-           questionService.createQuestionEntity(question);
-           return new ResponseEntity<>(question,HttpStatus.OK);
-        }
-        else {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
     }
 }

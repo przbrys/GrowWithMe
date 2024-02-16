@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "meals", schema = "mydb")
 @Getter
@@ -29,8 +27,8 @@ public class Meal {
     @Column(name = "mealMacroElements", nullable = false, length = 100)
     private String mealMacroElements;
     @Basic
-    @Column(name = "meallingredients", nullable = false, length = 600)
-    private String meallingredients;
+    @Column(name = "mealIngredients", nullable = false, length = 600)
+    private String mealIngredients;
     @Basic
     @Column(name = "mealPreparationDescription", nullable = false, length = 1000)
     private String mealPreparationDescription;

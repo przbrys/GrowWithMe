@@ -40,7 +40,7 @@ public class ReportController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/updateReport")
+    @PatchMapping
     public ResponseEntity<Report> updateReport(@RequestBody Report reportToUpdate){
         try {
             Report updatedReport = reportService.updateReport(reportToUpdate);

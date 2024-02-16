@@ -1,5 +1,6 @@
 package com.GrowWithMe.GrowWithMe.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Report {
     private Date reportDate;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "reportClientId", referencedColumnName = "clientId")
     private Client client;
 }

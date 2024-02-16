@@ -1,6 +1,5 @@
 package com.GrowWithMe.GrowWithMe.controller;
 
-import com.GrowWithMe.GrowWithMe.model.Client;
 import com.GrowWithMe.GrowWithMe.model.DietPlan;
 import com.GrowWithMe.GrowWithMe.model.Meal;
 import com.GrowWithMe.GrowWithMe.service.impl.DietPlanService;
@@ -18,8 +17,7 @@ import java.util.Optional;
 public class DietPlanController {
     @Autowired
     private DietPlanService dietPlanService;
-
-    @GetMapping("/allDietPlan")
+    @GetMapping
     public ResponseEntity<List<DietPlan>> getAllDietPlan(){
         List<DietPlan> dietPlanList=dietPlanService.getAllDietPlan();
         return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
@@ -35,10 +33,10 @@ public class DietPlanController {
         Optional<DietPlan> dietPlanOptional= dietPlanService.getDietPlanById(id);
         return dietPlanOptional.map(dietPlan -> new ResponseEntity<>(dietPlan, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @PostMapping("/create")
-    public ResponseEntity<DietPlan> createDietPlanEntity(@RequestBody DietPlan dietPlan,@RequestBody List<Meal> mealList){
+    @PostMapping
+    public ResponseEntity<DietPlan> createDietPlanEntity(@RequestBody DietPlan dietPlan){
         try{
-            DietPlan dietPlanToCreate=dietPlanService.createDietPlanEntity(dietPlan, mealList);
+            DietPlan dietPlanToCreate=dietPlanService.createDietPlanEntity(dietPlan);
             return new ResponseEntity<>(dietPlanToCreate,HttpStatus.CREATED);
         }catch(IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -53,7 +51,7 @@ public class DietPlanController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/updateDietPlan")
+    @PatchMapping
     public ResponseEntity<DietPlan> updateDietPlan(@RequestBody DietPlan dietPlanToUpdate){
         try {
             DietPlan updatedDietPlan = dietPlanService.updateDietPlan(dietPlanToUpdate);

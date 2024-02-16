@@ -46,15 +46,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User updateUserPassword(Integer userId, String userNewPassword) {
-        Optional<User> userOptional=userRepository.findById(userId);
+    public User updateUserPassword(User userToUpdate) {
+        Optional<User> userOptional=userRepository.findById(userToUpdate.getUserId());
         if(userOptional.isPresent()){
-            User user=userOptional.get();
-            user.setUserPassword(userNewPassword);
-            return userRepository.save(user);
+            return userRepository.save(userToUpdate);
         }
         else{
-            throw new EntityNotFoundException("User entity with id " + userId + " not found");
+            throw new EntityNotFoundException("User entity with id " + userToUpdate.getUserId() + " not found");
         }
     }
 }

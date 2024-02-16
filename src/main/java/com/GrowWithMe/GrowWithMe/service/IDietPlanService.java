@@ -12,6 +12,6 @@ public interface IDietPlanService {
 //    List<DietPlan> getAllClientDietPlan(Client client);
     Optional<DietPlan> getDietPlanById(Integer dietPlanId);
     void deleteDietPlanEntity(Integer dietPlanId);
-    DietPlan createDietPlanEntity(DietPlan dietPlan, List<Meal> mealList);
+    DietPlan createDietPlanEntity(DietPlan dietPlan);
     DietPlan updateDietPlan(DietPlan dietPlanToUpdate);
 }

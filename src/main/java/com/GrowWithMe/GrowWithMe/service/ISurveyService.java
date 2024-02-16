@@ -11,6 +11,6 @@ public interface ISurveyService {
 //    List<Survey> getAllClientSurvey(Client client);
     Optional<Survey> getSurveyById(Integer surveyId);
     void deleteSurveyEntity(Integer surveyId);
-    Survey createSurveyEntity(Survey survey, List<Question> questionList);
+    Survey createSurveyEntity(Survey survey);
     Survey updateSurvey(Survey surveyToUpdate);
 }

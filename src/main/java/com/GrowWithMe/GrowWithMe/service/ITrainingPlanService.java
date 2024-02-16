@@ -12,6 +12,6 @@ public interface ITrainingPlanService {
 //    List<TrainingPlan> getAllClientTrainingPlan(Client client);
     Optional<TrainingPlan> getTrainingPlanById(Integer trainingPlanId);
     void deleteTrainingPlanEntity(Integer trainingPlanId);
-    TrainingPlan createTrainingPlanEntity(TrainingPlan trainingPlan, List<Exercise> exerciseList);
+    TrainingPlan createTrainingPlanEntity(TrainingPlan trainingPlan);
     TrainingPlan updateTrainingPlan(TrainingPlan trainingPlanToUpdate);
 }
