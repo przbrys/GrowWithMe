@@ -5,15 +5,21 @@ import com.GrowWithMe.GrowWithMe.service.IUserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService {
+public class UserService implements IUserService, UserDetailsService {
     @Autowired
     private IUserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Override
     public List<User> getAllUser() {
         return userRepository.findAll();
@@ -54,5 +60,10 @@ public class UserService implements IUserService {
         else{
             throw new EntityNotFoundException("User entity with id " + userToUpdate.getUserId() + " not found");
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUserLogin(username).orElseThrow(()->new UsernameNotFoundException("User is not valid"));
     }
 }

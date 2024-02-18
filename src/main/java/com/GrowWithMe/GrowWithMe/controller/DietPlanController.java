@@ -1,7 +1,6 @@
 package com.GrowWithMe.GrowWithMe.controller;
 
 import com.GrowWithMe.GrowWithMe.model.DietPlan;
-import com.GrowWithMe.GrowWithMe.model.Meal;
 import com.GrowWithMe.GrowWithMe.service.impl.DietPlanService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
