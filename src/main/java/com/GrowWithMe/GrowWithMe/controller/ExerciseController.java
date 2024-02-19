@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Exercise")
+@RequestMapping("/exercise")
 public class ExerciseController {
     @Autowired
     private ExerciseService exerciseService;

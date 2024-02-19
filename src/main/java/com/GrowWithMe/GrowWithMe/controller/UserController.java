@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -28,11 +28,6 @@ public class UserController {
         return userOptional.map(user -> new ResponseEntity<>(user,HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
-    public ResponseEntity<User> createUserEntity(@RequestBody User user) {
-        User createdNewUser = userService.createUserEntity(user);
-        return new ResponseEntity<>(createdNewUser,HttpStatus.OK);
-    }
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUserEntity(@PathVariable Integer id)
     {

@@ -50,11 +50,11 @@ public class UserService implements IUserService, UserDetailsService {
             throw new RuntimeException("Error in creating new User.",e);
         }
     }
-
     @Override
     public User updateUserPassword(User userToUpdate) {
         Optional<User> userOptional=userRepository.findById(userToUpdate.getUserId());
         if(userOptional.isPresent()){
+            passwordEncoder.encode(userToUpdate.getPassword());
             return userRepository.save(userToUpdate);
         }
         else{

@@ -1,5 +1,6 @@
 package com.GrowWithMe.GrowWithMe.model.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Getter
@@ -12,4 +13,5 @@ public class RegistrationDTO {
     private String userName;
     private String userSurname;
     private String userPassword;
+    private String userRole;
 }

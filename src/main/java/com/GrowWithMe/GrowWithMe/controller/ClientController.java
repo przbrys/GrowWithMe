@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Client")
+@RequestMapping("/client")
 public class ClientController {
     @Autowired
     private ClientService clientService;
@@ -32,31 +32,6 @@ public class ClientController {
         Optional<Trainer> trainerOptional=clientService.getClientTrainer(id);
         return trainerOptional.map(trainer -> new ResponseEntity<>(trainer,HttpStatus.OK)).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping("/clientBodyInformation")
-    public ResponseEntity<List<BodyInformation>> getClientBodyInformation(@RequestBody Client client){
-        List<BodyInformation> bodyInformationList=clientService.getClientBodyInformation(client);
-        return new ResponseEntity<>(bodyInformationList, bodyInformationList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
-    }
-    @GetMapping("/clientReport")
-    public ResponseEntity<List<Report>> getClientReports(@RequestBody Client client){
-        List<Report> reportList=clientService.getClientReport(client);
-        return new ResponseEntity<>(reportList, reportList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
-    }
-    @GetMapping("/clientSurvey")
-    public  ResponseEntity<List<Survey>> getClientSurvey(@RequestBody Client client){
-        List<Survey> surveyList=clientService.getClientSurvey(client);
-        return new ResponseEntity<>(surveyList, surveyList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
-    }
-    @GetMapping("/clientDietPlan")
-    public ResponseEntity<List<DietPlan>> getClientDietPlan(@RequestBody Client client){
-        List<DietPlan> dietPlanList=clientService.getClientDietPlan(client);
-        return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
-    }
-    @GetMapping("/clientTrainingPlan")
-    public ResponseEntity<List<TrainingPlan>> getClientTrainingPlan(@RequestBody Client client){
-        List<TrainingPlan> trainingPlanList=clientService.getClientTrainingPlan(client);
-        return new ResponseEntity<>(trainingPlanList, trainingPlanList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
-    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClientEntity(@PathVariable Integer id){
         try {
@@ -75,7 +50,7 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @PatchMapping("/updateClient")
+    @PatchMapping
     public ResponseEntity<Client> updateClient(@RequestBody Client clientToUpdate){
         try {
             Client updatedClient=clientService.updateClient(clientToUpdate);

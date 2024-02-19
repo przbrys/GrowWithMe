@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/DietPlan")
+@RequestMapping("/dietPlan")
 public class DietPlanController {
     @Autowired
     private DietPlanService dietPlanService;
@@ -22,11 +22,6 @@ public class DietPlanController {
         return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 
     }
-//    @GetMapping("/allClientDietPlan")
-//    public ResponseEntity<List<DietPlan>> getAllClientDietPlan(@RequestBody Client client){
-//        List<DietPlan> dietPlanList=dietPlanService.getAllClientDietPlan(client);
-//        return new ResponseEntity<>(dietPlanList, dietPlanList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
-//    }
     @GetMapping("/{id}")
     public ResponseEntity<DietPlan> getDietPlanById(@PathVariable Integer id){
         Optional<DietPlan> dietPlanOptional= dietPlanService.getDietPlanById(id);

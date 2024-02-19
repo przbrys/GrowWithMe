@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Meal")
+@RequestMapping("/meal")
 public class MealController {
     @Autowired
     private MealService mealService;

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Survey")
+@RequestMapping("/survey")
 public class SurveyController {
     @Autowired
     private SurveyService surveyService;
@@ -22,12 +22,6 @@ public class SurveyController {
         List<Survey> surveyList =surveyService.getAllSurvey();
         return new ResponseEntity<>(surveyList,surveyList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
     }
-
-//    @GetMapping("/allClientSurvey")
-//    public ResponseEntity<List<Survey>> getAllClientSurvey(Client client){
-//        List<Survey> surveyList=surveyService.getAllClientSurvey(client);
-//        return new ResponseEntity<>(surveyList,surveyList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
-//    }
     @GetMapping("/{id}")
     public ResponseEntity<Survey> getSurveyById(@PathVariable Integer id){
         Optional<Survey> surveyOptional= surveyService.getSurveyById(id);

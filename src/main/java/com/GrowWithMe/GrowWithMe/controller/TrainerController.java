@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Trainer")
+@RequestMapping("/trainer")
 public class TrainerController {
     @Autowired
     private TrainerService trainerService;

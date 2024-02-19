@@ -9,6 +9,7 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -54,10 +55,21 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .csrf(csrf->csrf.disable())
-                .authorizeHttpRequests(auth-> {
-                    auth.requestMatchers("/authentication/**").permitAll();
-                    auth.anyRequest().authenticated();
-                });
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/authentication/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/trainer").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/client", "/trainer").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/user").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/trainer/*", "/trainer").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/client/*/clientTrainer", "/client/*/clientInfoFromUser").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PATCH, "/client", "/question", "/bodyInformation").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.DELETE, "/bodyInformation", "/report").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.POST, "/bodyInformation", "/report").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/trainer/*/trainerClient").hasRole("TRAINER")
+                        .requestMatchers("/question/**", "/survey/**", "/exercise/**", "/trainingPlan/**", "/meal/**", "/dietPlan/**").hasRole("TRAINER")
+                        .requestMatchers(HttpMethod.PATCH, "/report").hasRole("TRAINER")
+                        //.anyRequest().authenticated()
+                );
         http.oauth2ResourceServer()
                 .jwt()
                 .jwtAuthenticationConverter(jwtAuthenticationConverter());
@@ -80,7 +92,7 @@ public class SecurityConfig {
         @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5050"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders((List.of("Authorization", "Cache-Control", "Content-Type")));

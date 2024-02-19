@@ -31,10 +31,10 @@ public class AuthenticationService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private TokenService tokenService;
-    public User registerUser(String userLogin, String userName, String userSurname, String password){
+    public User registerUser(String userLogin, String userName, String userSurname, String userPassword, String role){
         try {
-            String encodedPassword = passwordEncoder.encode(password);
-            Role userRole = roleRepository.findByAuthority("USER").get();
+            String encodedPassword = passwordEncoder.encode(userPassword);
+            Role userRole = roleRepository.findByAuthority(role.toUpperCase()).get();
             Set<Role> authorities = new HashSet<>();
             authorities.add(userRole);
             return userRepository.save(new User(0, userLogin, userName, userSurname, encodedPassword, authorities));
@@ -53,7 +53,7 @@ public class AuthenticationService {
             String token=tokenService.generateJWT(auth);
             return new LoginResponseDTO(userRepository.findByUserLogin(userLogin).get(),token);
         }catch (BadCredentialsException e){
-            return new LoginResponseDTO(null,"");
+            return null;
         }
     }
 }
