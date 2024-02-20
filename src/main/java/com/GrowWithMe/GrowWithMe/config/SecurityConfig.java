@@ -13,7 +13,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,11 +30,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 import java.util.List;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -55,6 +59,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .csrf(csrf->csrf.disable())
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/authentication/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/trainer").permitAll()
@@ -89,10 +94,10 @@ public class SecurityConfig {
         return new NimbusJwtEncoder(jwks);
     }
 
-        @Bean
+    @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5050"));
+        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5500"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders((List.of("Authorization", "Cache-Control", "Content-Type")));

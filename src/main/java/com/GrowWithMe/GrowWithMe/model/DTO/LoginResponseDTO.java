@@ -11,5 +11,6 @@ import lombok.Setter;
 public class LoginResponseDTO {
     private User user;
     private String jwt;
-
+    private Integer trainerId;
+    private Integer clientId;
 }

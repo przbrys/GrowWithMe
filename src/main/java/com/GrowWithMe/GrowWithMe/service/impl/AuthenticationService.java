@@ -51,7 +51,9 @@ public class AuthenticationService {
                     new UsernamePasswordAuthenticationToken(userLogin, password)
             );
             String token=tokenService.generateJWT(auth);
-            return new LoginResponseDTO(userRepository.findByUserLogin(userLogin).get(),token);
+            User user = userRepository.findByUserLogin(userLogin).get();
+            Integer userId=user.getUserId();
+            return new LoginResponseDTO(user,token,userRepository.findTrainerIdByUserId(userId), userRepository.findClientIdByUserId(userId));
         }catch (BadCredentialsException e){
             return null;
         }
