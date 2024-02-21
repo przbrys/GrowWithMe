@@ -5,7 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-@Table(name="roles", schema = "mydb")
+@Table(name="roles", schema = "defaultdb")
 @Getter
 @Setter
 @ToString

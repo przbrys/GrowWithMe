@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users", schema = "mydb")
+@Table(name = "users", schema = "defaultdb")
 
 public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,13 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name="roleId"))
     private Set<Role> authorities;
 
+    @OneToOne
+    @JoinColumn(name="userId", referencedColumnName = "trainerUserId")
+    private Trainer trainer;
+
+    @OneToOne
+    @JoinColumn(name="userId", referencedColumnName = "clientUserId")
+    private Client client;
 
     public User(){
         super();

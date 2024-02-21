@@ -65,7 +65,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/trainer").permitAll()
                         .requestMatchers(HttpMethod.POST, "/client", "/trainer").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/user").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/trainer/*", "/trainer").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/trainer/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.GET, "/client/*/clientTrainer", "/client/*/clientInfoFromUser").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.PATCH, "/client", "/question", "/bodyInformation").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.DELETE, "/bodyInformation", "/report").hasRole("CLIENT")

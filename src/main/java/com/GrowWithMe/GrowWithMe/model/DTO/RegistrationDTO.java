@@ -1,6 +1,5 @@
 package com.GrowWithMe.GrowWithMe.model.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Getter

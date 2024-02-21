@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "surveys", schema = "mydb")
+@Table(name = "surveys", schema = "defaultdb")
 @Getter
 @Setter
 @ToString
@@ -32,7 +32,7 @@ public class Survey {
     private Client client;
 
     @ManyToMany()
-    @JoinTable(name = "SurveysToQuestions",
+    @JoinTable(name = "surveysToQuestions",
             joinColumns = @JoinColumn(name = "surveysToQuestionsSurveyId"),
             inverseJoinColumns = @JoinColumn(name = "surveysToQuestionsQuestionId"))
     @JsonIgnoreProperties("surveyList")

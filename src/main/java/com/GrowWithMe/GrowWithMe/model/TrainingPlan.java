@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "trainingplans", schema = "mydb")
+@Table(name = "trainingplans", schema = "defaultdb")
 @Getter
 @Setter
 @ToString

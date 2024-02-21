@@ -1,5 +1,8 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
+import com.GrowWithMe.GrowWithMe.model.DTO.UserResponseDTO;
 import com.GrowWithMe.GrowWithMe.model.User;
+import com.GrowWithMe.GrowWithMe.repository.IClientRepository;
+import com.GrowWithMe.GrowWithMe.repository.ITrainerRepository;
 import com.GrowWithMe.GrowWithMe.repository.IUserRepository;
 import com.GrowWithMe.GrowWithMe.service.IUserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,14 +23,39 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private IClientRepository clientRepository;
+    @Autowired
+    private ITrainerRepository trainerRepository;
+
     @Override
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
 
     @Override
-    public Optional<User> getUserById(Integer userId) {
-        return userRepository.findById(userId);
+    public Optional<UserResponseDTO> getUserById(Integer userId) {
+
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            Integer trainerId=userRepository.findTrainerIdByUserId(user.getUserId());
+            Integer clientId=userRepository.findClientIdByUserId(user.getUserId());
+
+            if(trainerId==null && clientId==null)
+            {UserResponseDTO userResponseDTO = new UserResponseDTO(user.getUserId(),user.getUserName(),user.getUserSurname(),trainerId, clientId);
+                return Optional.of(userResponseDTO);
+            } else if (trainerId==null) {
+                UserResponseDTO userResponseDTO = new UserResponseDTO(user.getUserId(),user.getUserName(),user.getUserSurname(), clientId,clientRepository.findById(clientId).get());
+                return Optional.of(userResponseDTO);
+            } else if (clientId==null) {
+                UserResponseDTO userResponseDTO = new UserResponseDTO(user.getUserId(),user.getUserName(),user.getUserSurname()
+                        ,trainerId, trainerRepository.findById(trainerId).get());
+                return Optional.of(userResponseDTO);
+            }
+
+        }
+        return Optional.empty();
     }
 
     @Override

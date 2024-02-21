@@ -1,4 +1,5 @@
 package com.GrowWithMe.GrowWithMe.controller;
+import com.GrowWithMe.GrowWithMe.model.DTO.UserResponseDTO;
 import com.GrowWithMe.GrowWithMe.model.User;
 import com.GrowWithMe.GrowWithMe.service.impl.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,8 +24,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer id){
-        Optional<User> userOptional=userService.getUserById(id);
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Integer id){
+        Optional<UserResponseDTO> userOptional=userService.getUserById(id);
         return userOptional.map(user -> new ResponseEntity<>(user,HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
