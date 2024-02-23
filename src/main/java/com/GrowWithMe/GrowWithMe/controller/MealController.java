@@ -1,5 +1,7 @@
 package com.GrowWithMe.GrowWithMe.controller;
+import com.GrowWithMe.GrowWithMe.model.DietPlan;
 import com.GrowWithMe.GrowWithMe.model.Meal;
+import com.GrowWithMe.GrowWithMe.service.impl.DietPlanService;
 import com.GrowWithMe.GrowWithMe.service.impl.MealService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class MealController {
     @Autowired
     private MealService mealService;
+    @Autowired
+    private DietPlanService dietPlanService;
 
     @GetMapping
     public ResponseEntity<List<Meal>> getAllMeal(){
@@ -31,6 +35,22 @@ public class MealController {
         Meal createdMeal = mealService.createMealEntity(meal);
         return new ResponseEntity<>(createdMeal,HttpStatus.CREATED);
     }
+    @PostMapping("/{dietPlanId}")
+    public ResponseEntity<Meal> createNewMealEntity(@RequestBody Meal meal, @PathVariable Integer dietPlanId){
+        Meal createdMeal = mealService.createMealEntity(meal);
+        Optional<DietPlan> dietPlanOptional= dietPlanService.getDietPlanById(dietPlanId);
+        if(dietPlanOptional.isPresent())
+        {
+            DietPlan dietPlan= dietPlanOptional.get();
+            dietPlan.getMealList().add(createdMeal);
+            dietPlan.setMealList(dietPlan.getMealList());
+            dietPlanService.updateDietPlan(dietPlan);
+
+            return new ResponseEntity<>(createdMeal,HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMealById(@PathVariable Integer id){
         try {

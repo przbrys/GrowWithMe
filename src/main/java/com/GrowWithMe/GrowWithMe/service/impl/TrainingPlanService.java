@@ -9,6 +9,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 @Service
 public class TrainingPlanService implements ITrainingPlanService {
@@ -20,10 +21,10 @@ public class TrainingPlanService implements ITrainingPlanService {
         return trainingPlanRepository.findAll();
     }
 
-//    @Override
-//    public List<TrainingPlan> getAllClientTrainingPlan(Client client) {
-//        return trainingPlanRepository.findByClient(client);
-//    }
+    @Override
+    public List<TrainingPlan> getTrainingPlansByTrainerId(Integer trainerId) {
+        return trainingPlanRepository.getTrainingPlansByTrainerId(trainerId);
+    }
 
     @Override
     public Optional<TrainingPlan> getTrainingPlanById(Integer trainingPlanId) {
@@ -54,7 +55,16 @@ public class TrainingPlanService implements ITrainingPlanService {
     public TrainingPlan updateTrainingPlan(TrainingPlan trainingPlanToUpdate) {
         Optional<TrainingPlan> trainingPlanOptional = trainingPlanRepository.findById(trainingPlanToUpdate.getTrainingPlanId());
         if (trainingPlanOptional.isPresent()) {
-            return trainingPlanRepository.save(trainingPlanToUpdate);
+            TrainingPlan trainingPlan= trainingPlanOptional.get();
+
+            if (trainingPlanToUpdate.getTrainingPlanName()!=null && !trainingPlanToUpdate.getTrainingPlanName().equals(trainingPlan.getTrainingPlanName()))
+                trainingPlan.setTrainingPlanName(trainingPlanToUpdate.getTrainingPlanName());
+            if(trainingPlanToUpdate.getClient()!=null && !Objects.equals(trainingPlanToUpdate.getClient(), trainingPlan.getClient()))
+                trainingPlan.setClient(trainingPlanToUpdate.getClient());
+            if(trainingPlanToUpdate.getExerciseList()!= null && !Objects.deepEquals(trainingPlanToUpdate.getExerciseList(), (trainingPlan.getExerciseList())))
+                trainingPlan.setExerciseList(trainingPlanToUpdate.getExerciseList());
+
+            return trainingPlanRepository.save(trainingPlan);
         } else {
             throw new EntityNotFoundException("TrainingPlan entity with id " + trainingPlanToUpdate.getTrainingPlanId() + " not found, update failed");
         }

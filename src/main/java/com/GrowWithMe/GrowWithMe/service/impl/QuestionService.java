@@ -50,21 +50,17 @@ public class QuestionService implements IQuestionService {
     public Question updateQuestion(Question questionToUpdate) {
         Optional<Question> questionOptional =questionRepository.findById(questionToUpdate.getQuestionId());
         if (questionOptional.isPresent()) {
-            return questionRepository.save(questionToUpdate);
+            Question question = questionOptional.get();
+
+            if(questionToUpdate.getQuestionContent()!=null && !questionToUpdate.getQuestionContent().equals(question.getQuestionContent()))
+                question.setQuestionContent(questionToUpdate.getQuestionContent());
+            if(questionToUpdate.getQuestionClientAnswer()!=null && !questionToUpdate.getQuestionClientAnswer().equals(question.getQuestionClientAnswer()))
+                question.setQuestionClientAnswer(questionToUpdate.getQuestionClientAnswer());
+
+            return questionRepository.save(question);
         } else {
             throw new EntityNotFoundException("Question entity with id " + questionToUpdate.getQuestionId() + " not found, update failed");
         }
     }
 
-    @Override
-    public Question updateQuestionClientAnswer(Integer questionId, String answerContent) {
-        Optional<Question> questionOptional =questionRepository.findById(questionId);
-        if (questionOptional.isPresent()) {
-            Question questionToUpdate= questionOptional.get();
-            questionToUpdate.setQuestionContent(answerContent);
-            return questionRepository.save(questionToUpdate);
-        } else {
-            throw new EntityNotFoundException("Question entity with id " + questionId + " not found, update failed");
-        }
-    }
 }

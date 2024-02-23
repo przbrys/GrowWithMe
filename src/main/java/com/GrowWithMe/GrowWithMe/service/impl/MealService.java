@@ -50,7 +50,20 @@ public class MealService implements IMealService {
     public Meal updateMealInformation(Meal mealToUpdate) {
         Optional<Meal> mealOptional =mealRepository.findById(mealToUpdate.getMealId());
         if (mealOptional.isPresent()) {
-            return mealRepository.save(mealToUpdate);
+            Meal meal = mealOptional.get();
+
+            if(mealToUpdate.getMealIngredients()!=null && ! mealToUpdate.getMealIngredients().equals(meal.getMealIngredients()))
+                meal.setMealIngredients(mealToUpdate.getMealIngredients());
+            if(mealToUpdate.getMealName()!=null && ! mealToUpdate.getMealName().equals(meal.getMealName()))
+                meal.setMealName(mealToUpdate.getMealName());
+            if(mealToUpdate.getMealCaloricValue()!=null && ! mealToUpdate.getMealCaloricValue().equals(meal.getMealCaloricValue()))
+                meal.setMealCaloricValue(mealToUpdate.getMealCaloricValue());
+            if(mealToUpdate.getMealMacroElements()!=null && !mealToUpdate.getMealMacroElements().equals(meal.getMealMacroElements()))
+                meal.setMealMacroElements(mealToUpdate.getMealMacroElements());
+            if(mealToUpdate.getMealPreparationDescription()!=null && ! mealToUpdate.getMealPreparationDescription().equals(meal.getMealPreparationDescription()))
+                meal.setMealPreparationDescription(mealToUpdate.getMealPreparationDescription());
+
+            return mealRepository.save(meal);
         } else {
             throw new EntityNotFoundException("Meal entity with id " + mealToUpdate.getMealId() + " not found, update failed");
         }

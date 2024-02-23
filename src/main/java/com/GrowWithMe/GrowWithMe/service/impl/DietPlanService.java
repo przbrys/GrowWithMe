@@ -9,6 +9,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,10 +22,10 @@ public class DietPlanService implements IDietPlanService {
         return dietPlanRepository.findAll();
     }
 
-//    @Override
-//    public List<DietPlan> getAllClientDietPlan(Client client) {
-//        return dietPlanRepository.findByClient(client);
-//    }
+    @Override
+    public List<DietPlan> getDietPlansByTrainerId(Integer trainerId) {
+        return dietPlanRepository.getDietPlansByTrainerId(trainerId);
+    }
 
     @Override
     public Optional<DietPlan> getDietPlanById(Integer dietPlanId) {
@@ -55,7 +56,16 @@ public class DietPlanService implements IDietPlanService {
     public DietPlan updateDietPlan(DietPlan dietPlanToUpdate) {
         Optional<DietPlan> dietPlanOptional = dietPlanRepository.findById(dietPlanToUpdate.getDietPlanId());
         if (dietPlanOptional.isPresent()) {
-            return dietPlanRepository.save(dietPlanToUpdate);
+            DietPlan dietPlan = dietPlanOptional.get();
+
+            if(dietPlanToUpdate.getDietPlanName()!=null && !dietPlanToUpdate.getDietPlanName().equals(dietPlan.getDietPlanName()))
+                dietPlan.setDietPlanName(dietPlanToUpdate.getDietPlanName());
+            if(dietPlanToUpdate.getClient()!=null && !Objects.equals(dietPlanToUpdate.getClient(), dietPlan.getClient()))
+                dietPlan.setClient(dietPlan.getClient());
+            if(dietPlanToUpdate.getMealList()!=null && !Objects.deepEquals(dietPlanToUpdate.getMealList(), dietPlan.getMealList()))
+                dietPlan.setMealList(dietPlanToUpdate.getMealList());
+
+            return dietPlanRepository.save(dietPlan);
         } else {
             throw new EntityNotFoundException("DietPlan entity with id " + dietPlanToUpdate.getDietPlanId() + " not found, update failed");
         }

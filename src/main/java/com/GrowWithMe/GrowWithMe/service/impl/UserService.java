@@ -53,7 +53,8 @@ public class UserService implements IUserService, UserDetailsService {
                         ,trainerId, trainerRepository.findById(trainerId).get());
                 return Optional.of(userResponseDTO);
             }
-
+            UserResponseDTO userResponseDTO=new UserResponseDTO(user.getUserId(),user.getUserName(),user.getUserSurname(),trainerId, clientId,trainerRepository.findById(trainerId).get(),clientRepository.findById(clientId).get());
+            return Optional.of(userResponseDTO);
         }
         return Optional.empty();
     }

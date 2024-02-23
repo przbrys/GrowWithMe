@@ -2,16 +2,14 @@ package com.GrowWithMe.GrowWithMe.model;
 
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Table(name = "exercises", schema = "defaultdb")
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @EqualsAndHashCode
 public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +17,7 @@ public class Exercise {
     @Column(name = "exerciseId", nullable = false)
     private Integer exerciseId;
     @Basic
-    @Column(name = "exerciseName", nullable = false, length = 45)
+    @Column(name = "exerciseName", nullable = false)
     private String exerciseName;
     @Basic
     @Column(name = "exerciseNumberOfSeries", nullable = true)
@@ -28,10 +26,15 @@ public class Exercise {
     @Column(name = "exerciseNumberOfRepetitions", nullable = true)
     private Integer exerciseNumberOfRepetitions;
     @Basic
-    @Column(name = "exerciseInformations", length = 1000)
+    @Column(name = "exerciseInformations")
     private String exerciseInformations;
-    @Basic
-    @Column(name = "exercisePhotoURL", nullable = true, length = 300)
-    private String exercisePhotoUrl;
+
+
+    public Exercise(Exercise exercise){
+        this.exerciseName=exercise.getExerciseName();
+        this.exerciseNumberOfSeries = exercise.getExerciseNumberOfSeries();
+        this.exerciseNumberOfRepetitions = exercise.getExerciseNumberOfRepetitions();
+        this.exerciseInformations = exercise.getExerciseInformations();
+    }
 
 }

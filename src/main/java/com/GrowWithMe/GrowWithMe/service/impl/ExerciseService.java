@@ -42,7 +42,6 @@ public class ExerciseService implements IExerciseService {
         }
     }
     @Override
-//    ToDo!!! need to add validation, musn't add null
     public Exercise updateExercise(Exercise exerciseToUpdate) {
         Optional<Exercise> exerciseOptional =exerciseRepository.findById(exerciseToUpdate.getExerciseId());
         if (exerciseOptional.isPresent()) {

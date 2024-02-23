@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,11 +22,6 @@ public class SurveyService implements ISurveyService{
     public List<Survey> getAllSurvey() {
         return surveyRepository.findAll();
     }
-
-//    @Override
-//    public List<Survey> getAllClientSurvey(Client client) {
-//        return surveyRepository.findByClient(client);
-//    }
 
     @Override
     public Optional<Survey> getSurveyById(Integer surveyId) {
@@ -56,7 +52,16 @@ public class SurveyService implements ISurveyService{
     public Survey updateSurvey(Survey surveyToUpdate) {
         Optional<Survey> surveyOptional =surveyRepository.findById(surveyToUpdate.getSurveyId());
         if (surveyOptional.isPresent()) {
-            return surveyRepository.save(surveyToUpdate);
+            Survey survey=surveyOptional.get();
+
+            if (surveyToUpdate.getSurveyName()!=null && !surveyToUpdate.getSurveyName().equals(survey.getSurveyName()))
+                survey.setSurveyName(surveyToUpdate.getSurveyName());
+            if(surveyToUpdate.getClient()!=null && !Objects.equals(surveyToUpdate.getClient(), survey.getClient()))
+                survey.setClient(surveyToUpdate.getClient());
+            if(surveyToUpdate.getQuestionList()!=null && !Objects.deepEquals(surveyToUpdate.getQuestionList(), survey.getQuestionList()))
+                survey.setQuestionList(surveyToUpdate.getQuestionList());
+
+            return surveyRepository.save(survey);
         } else {
             throw new EntityNotFoundException("Survey entity with id " + surveyToUpdate.getSurveyId() + " not found, update failed");
         }

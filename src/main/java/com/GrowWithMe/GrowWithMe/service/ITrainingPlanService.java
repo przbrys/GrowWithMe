@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ITrainingPlanService {
     List<TrainingPlan> getAllTrainingPlan();
-//    List<TrainingPlan> getAllClientTrainingPlan(Client client);
+    List<TrainingPlan> getTrainingPlansByTrainerId(Integer trainerId);
     Optional<TrainingPlan> getTrainingPlanById(Integer trainingPlanId);
     void deleteTrainingPlanEntity(Integer trainingPlanId);
     TrainingPlan createTrainingPlanEntity(TrainingPlan trainingPlan);

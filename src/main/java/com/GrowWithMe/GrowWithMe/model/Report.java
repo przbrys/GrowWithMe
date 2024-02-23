@@ -22,10 +22,10 @@ public class Report {
     @Column(name = "reportId", nullable = false)
     private Integer reportId;
     @Basic
-    @Column(name = "reportClientMessage", nullable = false, length = 400)
+    @Column(name = "reportClientMessage", nullable = false)
     private String reportClientMessage;
     @Basic
-    @Column(name = "reportTrainerMessage", nullable = true, length = 400)
+    @Column(name = "reportTrainerMessage", nullable = true)
     private String reportTrainerMessage;
     @Basic
     @Column(name = "reportDate", nullable = false)

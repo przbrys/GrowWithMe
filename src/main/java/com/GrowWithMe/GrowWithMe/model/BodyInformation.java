@@ -40,7 +40,7 @@ public class BodyInformation {
     @Column(name = "bodyInformationCalfMeasurement", nullable = false)
     private Integer bodyInformationCalfMeasurement;
     @Basic
-    @Column(name = "bodyTrainerAdditionalInformation", nullable = true, length = 1000)
+    @Column(name = "bodyTrainerAdditionalInformation", nullable = true)
     private String bodyTrainerAdditionalInformation;
 
     @ManyToOne

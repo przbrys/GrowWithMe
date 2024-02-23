@@ -1,7 +1,9 @@
 package com.GrowWithMe.GrowWithMe.controller;
 
 import com.GrowWithMe.GrowWithMe.model.Exercise;
+import com.GrowWithMe.GrowWithMe.model.TrainingPlan;
 import com.GrowWithMe.GrowWithMe.service.impl.ExerciseService;
+import com.GrowWithMe.GrowWithMe.service.impl.TrainingPlanService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class ExerciseController {
     @Autowired
     private ExerciseService exerciseService;
+    @Autowired
+    private TrainingPlanService trainingPlanService;
 
     @GetMapping
     public ResponseEntity<List<Exercise>> getAllExercise(){
@@ -30,6 +34,21 @@ public class ExerciseController {
     public ResponseEntity<Exercise> createExerciseEntity(@RequestBody Exercise exercise){
         Exercise createdExercise=exerciseService.createExerciseEntity(exercise);
         return new ResponseEntity<>(createdExercise,HttpStatus.CREATED);
+    }
+    @PostMapping("/{trainingPlanId}")
+    public ResponseEntity<Exercise> createExerciseEntity(@RequestBody Exercise exercise,@PathVariable Integer trainingPlanId){
+        Exercise createdExercise=exerciseService.createExerciseEntity(exercise);
+        Optional<TrainingPlan> trainingPlanOptional = trainingPlanService.getTrainingPlanById(trainingPlanId);
+        if(trainingPlanOptional.isPresent())
+        {
+            TrainingPlan trainingPlan = trainingPlanOptional.get();
+            trainingPlan.getExerciseList().add(createdExercise);
+            trainingPlan.setExerciseList(trainingPlan.getExerciseList());
+            trainingPlanService.updateTrainingPlan(trainingPlan);
+
+            return new ResponseEntity<>(createdExercise,HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExerciseEntity(@PathVariable Integer id){

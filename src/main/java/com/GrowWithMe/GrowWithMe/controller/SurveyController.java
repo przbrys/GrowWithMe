@@ -1,13 +1,19 @@
 package com.GrowWithMe.GrowWithMe.controller;
 
 import com.GrowWithMe.GrowWithMe.model.*;
+import com.GrowWithMe.GrowWithMe.model.DTO.ExistingEntryToClientDTO;
+import com.GrowWithMe.GrowWithMe.service.impl.ClientService;
+import com.GrowWithMe.GrowWithMe.service.impl.QuestionService;
 import com.GrowWithMe.GrowWithMe.service.impl.SurveyService;
+import com.GrowWithMe.GrowWithMe.service.impl.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +22,10 @@ import java.util.Optional;
 public class SurveyController {
     @Autowired
     private SurveyService surveyService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private QuestionService questionService;
 
     @GetMapping
     public ResponseEntity<List<Survey>> getAllSurvey(){
@@ -32,6 +42,35 @@ public class SurveyController {
         try{
             Survey surveyToCreate=surveyService.createSurveyEntity(survey);
             return new ResponseEntity<>(surveyToCreate,HttpStatus.CREATED);
+        }catch(IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @Transactional
+    @PostMapping("/surveyPlanToNewUser")
+    public ResponseEntity<Survey> createSurveyPlanToNewUser(@RequestBody ExistingEntryToClientDTO existingSurveyToClientDTO){
+        try{
+            Optional<Survey> surveyOptional=surveyService.getSurveyById(existingSurveyToClientDTO.getEntryId());
+            Optional<Client> clientOptional = clientService.getClientById(existingSurveyToClientDTO.getNewUserId());
+            if (surveyOptional.isPresent()&& clientOptional.isPresent())
+            {
+                Survey survey = new Survey();
+                survey.setClient(clientOptional.get());
+                List<Question> questionList = new ArrayList<>();
+
+                for (Question question: surveyOptional.get().getQuestionList() ){
+                    Question question1 = new Question(question.getQuestionContent());
+                    questionService.createQuestionEntity(question1);
+                    questionList.add(question1);
+                }
+
+                survey.setQuestionList(questionList);
+                survey.setSurveyName(surveyOptional.get().getSurveyName());
+                surveyService.createSurveyEntity(survey);
+                return new ResponseEntity<>(survey,HttpStatus.CREATED);
+            }else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         }catch(IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

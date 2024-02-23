@@ -23,7 +23,7 @@ public class Survey {
     @Column(name = "surveyId", nullable = false)
     private Integer surveyId;
     @Basic
-    @Column(name = "surveyName", nullable = false, length = 60)
+    @Column(name = "surveyName", nullable = false)
     private String surveyName;
 
     @ManyToOne

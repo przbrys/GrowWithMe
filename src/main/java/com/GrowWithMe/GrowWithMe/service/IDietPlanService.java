@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface IDietPlanService {
     List<DietPlan> getAllDietPlan();
-//    List<DietPlan> getAllClientDietPlan(Client client);
+    List<DietPlan> getDietPlansByTrainerId (Integer trainerId);
     Optional<DietPlan> getDietPlanById(Integer dietPlanId);
     void deleteDietPlanEntity(Integer dietPlanId);
     DietPlan createDietPlanEntity(DietPlan dietPlan);

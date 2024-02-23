@@ -37,6 +37,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -64,16 +65,16 @@ public class SecurityConfig {
                         .requestMatchers("/authentication/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/trainer").permitAll()
                         .requestMatchers(HttpMethod.POST, "/client", "/trainer").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/user").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/trainer/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PATCH, "/client", "/question", "/bodyInformation").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/user").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/trainer/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/bodyInformation", "/report").permitAll()
                         .requestMatchers(HttpMethod.GET, "/client/*/clientTrainer", "/client/*/clientInfoFromUser").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.PATCH, "/client", "/question", "/bodyInformation").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.DELETE, "/bodyInformation", "/report").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.POST, "/bodyInformation", "/report").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.GET, "/trainer/*/trainerClient").hasRole("TRAINER")
                         .requestMatchers("/question/**", "/survey/**", "/exercise/**", "/trainingPlan/**", "/meal/**", "/dietPlan/**").hasRole("TRAINER")
                         .requestMatchers(HttpMethod.PATCH, "/report").hasRole("TRAINER")
-                        //.anyRequest().authenticated()
+                        .anyRequest().authenticated()
                 );
         http.oauth2ResourceServer()
                 .jwt()

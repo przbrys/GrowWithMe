@@ -24,7 +24,7 @@ public class DietPlan {
     @Column(name = "dietPlanId", nullable = false)
     private Integer dietPlanId;
     @Basic
-    @Column(name = "dietPlanName", nullable = false, length = 100)
+    @Column(name = "dietPlanName", nullable = false)
     private String dietPlanName;
 
     @ManyToOne

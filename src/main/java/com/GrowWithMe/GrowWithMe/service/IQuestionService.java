@@ -9,5 +9,4 @@ public interface IQuestionService {
     void deleteQuestionEntity(Integer questionId);
     Question createQuestionEntity(Question question);
     Question updateQuestion(Question questionToUpdate);
-    Question updateQuestionClientAnswer(Integer questionId, String answerContent);
 }
