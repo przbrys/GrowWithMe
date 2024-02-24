@@ -1,4 +1,5 @@
 package com.GrowWithMe.GrowWithMe.controller;
+import com.GrowWithMe.GrowWithMe.model.DTO.ReportsForTrainerResponseDTO;
 import com.GrowWithMe.GrowWithMe.model.Report;
 import com.GrowWithMe.GrowWithMe.service.impl.ReportService;
 import jakarta.persistence.EntityNotFoundException;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,24 @@ public class ReportController {
     public ResponseEntity<List<Report>> getAllReports(){
         List<Report> reportList=reportService.getAllReports();
         return new ResponseEntity<>(reportList, reportList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+    }
+    @GetMapping("/{trainerId}/trainerReports")
+    public ResponseEntity<List<ReportsForTrainerResponseDTO>> getReportsByTrainerId(@PathVariable Integer trainerId){
+        try {
+            List<Report> reportList = reportService.getReportsByTrainerId(trainerId);
+            if (!reportList.isEmpty()) {
+               List<ReportsForTrainerResponseDTO> responseDTOList = new ArrayList<>();
+               for(Report report: reportList){
+                   ReportsForTrainerResponseDTO reportsForTrainerResponseDTO = new ReportsForTrainerResponseDTO(report.getClient().getUser(), report);
+                   responseDTOList.add(reportsForTrainerResponseDTO);
+               }
+                return new ResponseEntity<>(responseDTOList, HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (IllegalArgumentException e){
+            throw new RuntimeException("Illegal arguments in getReportsByTrainerId", e);
+        }
     }
     @GetMapping("/{id}")
     public ResponseEntity<Report> getReportById(@PathVariable Integer id){

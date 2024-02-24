@@ -62,7 +62,7 @@ public class DietPlanService implements IDietPlanService {
                 dietPlan.setDietPlanName(dietPlanToUpdate.getDietPlanName());
             if(dietPlanToUpdate.getClient()!=null && !Objects.equals(dietPlanToUpdate.getClient(), dietPlan.getClient()))
                 dietPlan.setClient(dietPlan.getClient());
-            if(dietPlanToUpdate.getMealList()!=null && !Objects.deepEquals(dietPlanToUpdate.getMealList(), dietPlan.getMealList()))
+            if(dietPlanToUpdate.getMealList()!=null && !dietPlanToUpdate.getMealList().isEmpty() && !Objects.deepEquals(dietPlanToUpdate.getMealList(), dietPlan.getMealList()))
                 dietPlan.setMealList(dietPlanToUpdate.getMealList());
 
             return dietPlanRepository.save(dietPlan);

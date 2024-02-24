@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ISurveyService {
     List<Survey> getAllSurvey();
-//    List<Survey> getAllClientSurvey(Client client);
+    List<Survey> getSurveyByTrainerId(Integer trainerId);
     Optional<Survey> getSurveyById(Integer surveyId);
     void deleteSurveyEntity(Integer surveyId);
     Survey createSurveyEntity(Survey survey);

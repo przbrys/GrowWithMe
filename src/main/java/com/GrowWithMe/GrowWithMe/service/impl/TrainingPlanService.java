@@ -61,7 +61,7 @@ public class TrainingPlanService implements ITrainingPlanService {
                 trainingPlan.setTrainingPlanName(trainingPlanToUpdate.getTrainingPlanName());
             if(trainingPlanToUpdate.getClient()!=null && !Objects.equals(trainingPlanToUpdate.getClient(), trainingPlan.getClient()))
                 trainingPlan.setClient(trainingPlanToUpdate.getClient());
-            if(trainingPlanToUpdate.getExerciseList()!= null && !Objects.deepEquals(trainingPlanToUpdate.getExerciseList(), (trainingPlan.getExerciseList())))
+            if(trainingPlanToUpdate.getExerciseList()!= null && !trainingPlanToUpdate.getExerciseList().isEmpty() && !Objects.deepEquals(trainingPlanToUpdate.getExerciseList(), (trainingPlan.getExerciseList())))
                 trainingPlan.setExerciseList(trainingPlanToUpdate.getExerciseList());
 
             return trainingPlanRepository.save(trainingPlan);

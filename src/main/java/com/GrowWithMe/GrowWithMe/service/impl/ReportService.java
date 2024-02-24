@@ -13,11 +13,17 @@ import java.util.Optional;
 @Service
 public class ReportService implements IReportService{
     @Autowired
-    IReportRepository reportRepository;
+    private IReportRepository reportRepository;
+
 
     @Override
     public List<Report> getAllReports() {
         return reportRepository.findAll();
+    }
+
+    @Override
+    public List<Report> getReportsByTrainerId(Integer trainerId) {
+        return reportRepository.getReportsByTrainerId(trainerId);
     }
 
     @Override

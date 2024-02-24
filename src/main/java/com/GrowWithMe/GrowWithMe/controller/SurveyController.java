@@ -2,6 +2,8 @@ package com.GrowWithMe.GrowWithMe.controller;
 
 import com.GrowWithMe.GrowWithMe.model.*;
 import com.GrowWithMe.GrowWithMe.model.DTO.ExistingEntryToClientDTO;
+import com.GrowWithMe.GrowWithMe.model.DTO.ExistingMealToDietPlanDTO;
+import com.GrowWithMe.GrowWithMe.model.DTO.ExistingQuestionToSurveyDTO;
 import com.GrowWithMe.GrowWithMe.service.impl.ClientService;
 import com.GrowWithMe.GrowWithMe.service.impl.QuestionService;
 import com.GrowWithMe.GrowWithMe.service.impl.SurveyService;
@@ -37,6 +39,11 @@ public class SurveyController {
         Optional<Survey> surveyOptional= surveyService.getSurveyById(id);
         return surveyOptional.map(survey -> new ResponseEntity<>(survey, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    @GetMapping("/{trainerId}/trainerSurveys")
+    public ResponseEntity<List<Survey>> getSurveysByTrainerId(@PathVariable Integer trainerId){
+        List<Survey> surveyList =surveyService.getSurveyByTrainerId(trainerId);
+        return new ResponseEntity<>(surveyList,surveyList.isEmpty()? HttpStatus.NOT_FOUND:HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<Survey> createSurveyEntity(@RequestBody Survey survey){
         try{
@@ -47,8 +54,8 @@ public class SurveyController {
         }
     }
     @Transactional
-    @PostMapping("/surveyPlanToNewUser")
-    public ResponseEntity<Survey> createSurveyPlanToNewUser(@RequestBody ExistingEntryToClientDTO existingSurveyToClientDTO){
+    @PostMapping("/surveyToNewUser")
+    public ResponseEntity<Survey> createSurveyToNewUser(@RequestBody ExistingEntryToClientDTO existingSurveyToClientDTO){
         try{
             Optional<Survey> surveyOptional=surveyService.getSurveyById(existingSurveyToClientDTO.getEntryId());
             Optional<Client> clientOptional = clientService.getClientById(existingSurveyToClientDTO.getNewUserId());
@@ -91,6 +98,43 @@ public class SurveyController {
             return new ResponseEntity<>(updatedSurvey, HttpStatus.OK);
         }catch (EntityNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/questionToSurvey")
+    public ResponseEntity<Survey> addQuestionToSurvey(@RequestBody ExistingQuestionToSurveyDTO existingQuestionToSurveyDTO){
+        try{
+            Optional<Question> questionOptional = questionService.getQuestionById(existingQuestionToSurveyDTO.getQuestionId());
+            Optional<Survey> surveyOptional = surveyService.getSurveyById(existingQuestionToSurveyDTO.getSurveyId());
+            if(questionOptional.isPresent() && surveyOptional.isPresent()){
+                Survey survey = surveyOptional.get();
+                var questions = survey.getQuestionList();
+                Question question = new Question(questionOptional.get().getQuestionContent());
+                questions.add(questionService.createQuestionEntity(question));
+                survey.setQuestionList(questions);
+                surveyService.updateSurvey(survey);
+                return new ResponseEntity<>(survey, HttpStatus.OK);
+            }return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("/deleteQuestionFromSurveyList")
+    public ResponseEntity<Survey> deleteQuestionFromSurveyList(@RequestBody ExistingQuestionToSurveyDTO existingQuestionToSurveyDTO){
+        try {
+            Optional<Survey> surveyOptional = surveyService.getSurveyById(existingQuestionToSurveyDTO.getSurveyId());
+            Optional<Question> questionOptional = questionService.getQuestionById(existingQuestionToSurveyDTO.getQuestionId());
+            if (surveyOptional.isPresent() && questionOptional.isPresent()) {
+                Survey survey = surveyOptional.get();
+                survey.getQuestionList().remove(questionOptional.get());
+                surveyService.updateSurvey(survey);
+                return new ResponseEntity<>(survey, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

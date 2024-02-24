@@ -24,6 +24,11 @@ public class SurveyService implements ISurveyService{
     }
 
     @Override
+    public List<Survey> getSurveyByTrainerId(Integer trainerId) {
+        return surveyRepository.getSurveyByTrainerId(trainerId);
+    }
+
+    @Override
     public Optional<Survey> getSurveyById(Integer surveyId) {
         return surveyRepository.findById(surveyId);
     }
@@ -58,7 +63,7 @@ public class SurveyService implements ISurveyService{
                 survey.setSurveyName(surveyToUpdate.getSurveyName());
             if(surveyToUpdate.getClient()!=null && !Objects.equals(surveyToUpdate.getClient(), survey.getClient()))
                 survey.setClient(surveyToUpdate.getClient());
-            if(surveyToUpdate.getQuestionList()!=null && !Objects.deepEquals(surveyToUpdate.getQuestionList(), survey.getQuestionList()))
+            if(surveyToUpdate.getQuestionList()!=null && !surveyToUpdate.getQuestionList().isEmpty() && !Objects.deepEquals(surveyToUpdate.getQuestionList(), survey.getQuestionList()))
                 survey.setQuestionList(surveyToUpdate.getQuestionList());
 
             return surveyRepository.save(survey);

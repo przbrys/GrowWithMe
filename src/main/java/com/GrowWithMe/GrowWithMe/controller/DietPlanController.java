@@ -2,6 +2,7 @@ package com.GrowWithMe.GrowWithMe.controller;
 
 import com.GrowWithMe.GrowWithMe.model.*;
 import com.GrowWithMe.GrowWithMe.model.DTO.ExistingEntryToClientDTO;
+import com.GrowWithMe.GrowWithMe.model.DTO.ExistingExerciseToTrainingPlanDTO;
 import com.GrowWithMe.GrowWithMe.model.DTO.ExistingMealToDietPlanDTO;
 import com.GrowWithMe.GrowWithMe.service.impl.ClientService;
 import com.GrowWithMe.GrowWithMe.service.impl.DietPlanService;
@@ -105,6 +106,23 @@ public class DietPlanController {
                 return new ResponseEntity<>(dietPlan, HttpStatus.OK);
             }return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PatchMapping("/deleteMealFromDietPlanList")
+    public ResponseEntity<DietPlan> deleteMealFromDietPlanList(@RequestBody ExistingMealToDietPlanDTO existingMealToDietPlanDTO){
+        try {
+            Optional<DietPlan> dietPlanOptional = dietPlanService.getDietPlanById(existingMealToDietPlanDTO.getDietPlanId());
+            Optional<Meal> mealOptional = mealService.getMealById(existingMealToDietPlanDTO.getMealId());
+            if (mealOptional.isPresent() && dietPlanOptional.isPresent()) {
+                DietPlan dietPlan = dietPlanOptional.get();
+                dietPlan.getMealList().remove(mealOptional.get());
+                dietPlanService.updateDietPlan(dietPlan);
+                return new ResponseEntity<>(dietPlan, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (IllegalArgumentException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
