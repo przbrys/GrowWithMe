@@ -72,7 +72,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/client/*/clientTrainer", "/client/*/clientInfoFromUser").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.DELETE, "/bodyInformation", "/report").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.GET, "/trainer/*/trainerClient").hasRole("TRAINER")
-                        .requestMatchers("/question/**", "/survey/**", "/exercise/**", "/trainingPlan/**", "/meal/**", "/dietPlan/**").hasRole("TRAINER")
+                        .requestMatchers("/question/**", "/exercise/**", "/trainingPlan/**", "/meal/**", "/dietPlan/**").hasRole("TRAINER")
                         .requestMatchers(HttpMethod.PATCH, "/report").hasRole("TRAINER")
                         .anyRequest().authenticated()
                 );
@@ -98,7 +98,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5500"));
+        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5500", "http://localhost:5500/"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders((List.of("Authorization", "Cache-Control", "Content-Type")));

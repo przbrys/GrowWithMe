@@ -29,7 +29,7 @@ public class Report {
     private String reportTrainerMessage;
     @Basic
     @Column(name = "reportDate", nullable = false)
-    private Date reportDate;
+    private String reportDate;
 
     @ManyToOne
     @JsonBackReference
