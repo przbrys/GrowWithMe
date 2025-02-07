@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users", schema = "defaultdb")
-
 public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -33,20 +33,20 @@ public class User implements UserDetails {
     private String userPassword;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="rolesToUsers",
-            joinColumns=@JoinColumn(name="userId"),
-            inverseJoinColumns = @JoinColumn(name="roleId"))
+    @JoinTable(name = "rolesToUsers",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> authorities;
 
     @OneToOne
-    @JoinColumn(name="userId", referencedColumnName = "trainerUserId")
+    @JoinColumn(name = "userId", referencedColumnName = "trainerUserId")
     private Trainer trainer;
 
     @OneToOne
-    @JoinColumn(name="userId", referencedColumnName = "clientUserId")
+    @JoinColumn(name = "userId", referencedColumnName = "clientUserId")
     private Client client;
 
-    public User(){
+    public User() {
         super();
         this.authorities = new HashSet<Role>();
     }
@@ -94,14 +94,14 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
     @Override
     @JsonIgnore
     public String getPassword() {
         return this.userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
     }
 
     @Override

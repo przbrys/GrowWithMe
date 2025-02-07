@@ -1,12 +1,7 @@
 package com.GrowWithMe.GrowWithMe.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
@@ -28,8 +23,8 @@ public class Question {
     @Column(name = "questionClientAnswer", nullable = true)
     private String questionClientAnswer;
 
-    public Question(String questionContent){
-        this.questionContent=questionContent;
-        this.questionClientAnswer="";
+    public Question(String questionContent) {
+        this.questionContent = questionContent;
+        this.questionClientAnswer = "";
     }
 }

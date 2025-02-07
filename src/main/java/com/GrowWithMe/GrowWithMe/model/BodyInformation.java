@@ -2,16 +2,15 @@ package com.GrowWithMe.GrowWithMe.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Table(name = "bodyinformations", schema = "defaultdb")
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class BodyInformation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

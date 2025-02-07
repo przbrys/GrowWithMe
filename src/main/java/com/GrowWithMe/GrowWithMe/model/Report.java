@@ -7,9 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Date;
-import java.util.Objects;
-
 @Entity
 @Table(name = "reports", schema = "defaultdb")
 @Getter

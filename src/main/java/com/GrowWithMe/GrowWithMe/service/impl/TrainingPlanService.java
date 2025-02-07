@@ -1,5 +1,5 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
-import com.GrowWithMe.GrowWithMe.model.Exercise;
+
 import com.GrowWithMe.GrowWithMe.model.TrainingPlan;
 import com.GrowWithMe.GrowWithMe.repository.ITrainingPlanRepository;
 import com.GrowWithMe.GrowWithMe.service.ITrainingPlanService;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 @Service
 public class TrainingPlanService implements ITrainingPlanService {
     @Autowired
@@ -55,13 +56,13 @@ public class TrainingPlanService implements ITrainingPlanService {
     public TrainingPlan updateTrainingPlan(TrainingPlan trainingPlanToUpdate) {
         Optional<TrainingPlan> trainingPlanOptional = trainingPlanRepository.findById(trainingPlanToUpdate.getTrainingPlanId());
         if (trainingPlanOptional.isPresent()) {
-            TrainingPlan trainingPlan= trainingPlanOptional.get();
+            TrainingPlan trainingPlan = trainingPlanOptional.get();
 
-            if (trainingPlanToUpdate.getTrainingPlanName()!=null && !trainingPlanToUpdate.getTrainingPlanName().equals(trainingPlan.getTrainingPlanName()))
+            if (trainingPlanToUpdate.getTrainingPlanName() != null && !trainingPlanToUpdate.getTrainingPlanName().equals(trainingPlan.getTrainingPlanName()))
                 trainingPlan.setTrainingPlanName(trainingPlanToUpdate.getTrainingPlanName());
-            if(trainingPlanToUpdate.getClient()!=null && !Objects.equals(trainingPlanToUpdate.getClient(), trainingPlan.getClient()))
+            if (trainingPlanToUpdate.getClient() != null && !Objects.equals(trainingPlanToUpdate.getClient(), trainingPlan.getClient()))
                 trainingPlan.setClient(trainingPlanToUpdate.getClient());
-            if(trainingPlanToUpdate.getExerciseList()!= null && !trainingPlanToUpdate.getExerciseList().isEmpty() && !Objects.deepEquals(trainingPlanToUpdate.getExerciseList(), (trainingPlan.getExerciseList())))
+            if (trainingPlanToUpdate.getExerciseList() != null && !trainingPlanToUpdate.getExerciseList().isEmpty() && !Objects.deepEquals(trainingPlanToUpdate.getExerciseList(), (trainingPlan.getExerciseList())))
                 trainingPlan.setExerciseList(trainingPlanToUpdate.getExerciseList());
 
             return trainingPlanRepository.save(trainingPlan);

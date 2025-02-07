@@ -2,7 +2,7 @@ package com.GrowWithMe.GrowWithMe.service.impl;
 
 import com.GrowWithMe.GrowWithMe.model.*;
 import com.GrowWithMe.GrowWithMe.repository.*;
-import com.GrowWithMe.GrowWithMe.service.*;
+import com.GrowWithMe.GrowWithMe.service.IClientService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -45,6 +45,7 @@ public class ClientService implements IClientService {
             return Optional.empty();
         }
     }
+
     @Override
     public List<BodyInformation> getClientBodyInformation(Client client) {
         return bodyInformationRepository.findByClient(client);
@@ -93,10 +94,10 @@ public class ClientService implements IClientService {
 
     @Override
     public Client updateClient(Client clientToUpdate) {
-        Optional<Client> clientOptional=clientRepository.findById(clientToUpdate.getClientId());
-        if (clientOptional.isPresent()){
+        Optional<Client> clientOptional = clientRepository.findById(clientToUpdate.getClientId());
+        if (clientOptional.isPresent()) {
             return clientRepository.save(clientToUpdate);
-        }else {
+        } else {
             throw new EntityNotFoundException("Client entity with id " + clientToUpdate.getClientId() + " not found, update failed");
         }
     }

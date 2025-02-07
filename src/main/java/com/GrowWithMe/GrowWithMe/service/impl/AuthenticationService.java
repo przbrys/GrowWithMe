@@ -31,30 +31,31 @@ public class AuthenticationService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private TokenService tokenService;
-    public User registerUser(String userLogin, String userName, String userSurname, String userPassword, String role){
+
+    public User registerUser(String userLogin, String userName, String userSurname, String userPassword, String role) {
         try {
             String encodedPassword = passwordEncoder.encode(userPassword);
             Role userRole = roleRepository.findByAuthority(role.toUpperCase()).get();
             Set<Role> authorities = new HashSet<>();
             authorities.add(userRole);
             return userRepository.save(new User(0, userLogin, userName, userSurname, encodedPassword, authorities));
-        }catch(DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("User with this login already exists.");
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Error during user registration.");
         }
     }
 
-    public LoginResponseDTO loginUser(String userLogin, String password){
+    public LoginResponseDTO loginUser(String userLogin, String password) {
         try {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userLogin, password)
             );
-            String token=tokenService.generateJWT(auth);
+            String token = tokenService.generateJWT(auth);
             User user = userRepository.findByUserLogin(userLogin).get();
-            Integer userId=user.getUserId();
-            return new LoginResponseDTO(user,token,userRepository.findTrainerIdByUserId(userId), userRepository.findClientIdByUserId(userId));
-        }catch (BadCredentialsException e){
+            Integer userId = user.getUserId();
+            return new LoginResponseDTO(user, token, userRepository.findTrainerIdByUserId(userId), userRepository.findClientIdByUserId(userId));
+        } catch (BadCredentialsException e) {
             return null;
         }
     }

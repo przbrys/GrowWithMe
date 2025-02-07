@@ -1,4 +1,5 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
+
 import com.GrowWithMe.GrowWithMe.model.Question;
 import com.GrowWithMe.GrowWithMe.repository.IQuestionRepository;
 import com.GrowWithMe.GrowWithMe.service.IQuestionService;
@@ -29,7 +30,7 @@ public class QuestionService implements IQuestionService {
     public void deleteQuestionEntity(Integer questionId) {
         try {
             questionRepository.deleteById(questionId);
-        }catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException("Question entity with id " + questionId + " not found", e);
         } catch (Exception e) {
             throw new RuntimeException("Error deleting Question", e);
@@ -41,20 +42,20 @@ public class QuestionService implements IQuestionService {
         try {
             questionRepository.save(question);
             return question;
-        }catch (Exception e){
-            throw new RuntimeException("Error in creating new Exercise.",e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error in creating new Exercise.", e);
         }
     }
 
     @Override
     public Question updateQuestion(Question questionToUpdate) {
-        Optional<Question> questionOptional =questionRepository.findById(questionToUpdate.getQuestionId());
+        Optional<Question> questionOptional = questionRepository.findById(questionToUpdate.getQuestionId());
         if (questionOptional.isPresent()) {
             Question question = questionOptional.get();
 
-            if(questionToUpdate.getQuestionContent()!=null && !questionToUpdate.getQuestionContent().equals(question.getQuestionContent()))
+            if (questionToUpdate.getQuestionContent() != null && !questionToUpdate.getQuestionContent().equals(question.getQuestionContent()))
                 question.setQuestionContent(questionToUpdate.getQuestionContent());
-            if(questionToUpdate.getQuestionClientAnswer()!=null && !questionToUpdate.getQuestionClientAnswer().equals(question.getQuestionClientAnswer()))
+            if (questionToUpdate.getQuestionClientAnswer() != null && !questionToUpdate.getQuestionClientAnswer().equals(question.getQuestionClientAnswer()))
                 question.setQuestionClientAnswer(questionToUpdate.getQuestionClientAnswer());
 
             return questionRepository.save(question);

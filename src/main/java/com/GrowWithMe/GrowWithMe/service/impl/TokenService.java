@@ -18,17 +18,18 @@ public class TokenService {
     private JwtEncoder jwtEncoder;
     @Autowired
     private JwtDecoder jwtDecoder;
-    public String generateJWT(Authentication auth){
-        Instant now=Instant.now();
 
-        String scope=auth.getAuthorities().stream()
+    public String generateJWT(Authentication auth) {
+        Instant now = Instant.now();
+
+        String scope = auth.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
-        JwtClaimsSet claims= JwtClaimsSet.builder()
+        JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
                 .subject(auth.getName())
-                .claim("roles",scope)
+                .claim("roles", scope)
                 .build();
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }

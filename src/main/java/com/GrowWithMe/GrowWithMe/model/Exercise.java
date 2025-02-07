@@ -30,8 +30,8 @@ public class Exercise {
     private String exerciseInformations;
 
 
-    public Exercise(Exercise exercise){
-        this.exerciseName=exercise.getExerciseName();
+    public Exercise(Exercise exercise) {
+        this.exerciseName = exercise.getExerciseName();
         this.exerciseNumberOfSeries = exercise.getExerciseNumberOfSeries();
         this.exerciseNumberOfRepetitions = exercise.getExerciseNumberOfRepetitions();
         this.exerciseInformations = exercise.getExerciseInformations();

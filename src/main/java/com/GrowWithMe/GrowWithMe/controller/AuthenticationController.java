@@ -22,12 +22,13 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity <User> registerUser(@RequestBody RegistrationDTO registrationDTO){
+    public ResponseEntity<User> registerUser(@RequestBody RegistrationDTO registrationDTO) {
         Optional<User> userOptional = Optional.ofNullable(authenticationService.registerUser(registrationDTO.getUserLogin(), registrationDTO.getUserName(), registrationDTO.getUserSurname(), registrationDTO.getUserPassword(), registrationDTO.getUserRole()));
         return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
+
     @PostMapping("/login")
-    public ResponseEntity <LoginResponseDTO> loginUser(@RequestBody LoginRequestDTO loginRequestDTO){
+    public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
         Optional<LoginResponseDTO> loginResponseDTOOptional = Optional.ofNullable(authenticationService.loginUser(loginRequestDTO.getUserLogin(), loginRequestDTO.getUserPassword()));
         return loginResponseDTOOptional.map(loginResponseDTO -> new ResponseEntity<>(loginResponseDTO, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }

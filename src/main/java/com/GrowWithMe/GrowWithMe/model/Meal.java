@@ -31,11 +31,11 @@ public class Meal {
     @Column(name = "mealPreparationDescription", nullable = true)
     private String mealPreparationDescription;
 
-    public Meal(Meal meal){
+    public Meal(Meal meal) {
         this.mealName = meal.getMealName();
-        this.mealCaloricValue=meal.getMealCaloricValue();
-        this.mealMacroElements=meal.getMealMacroElements();
-        this.mealIngredients=meal.getMealIngredients();
-        this.mealPreparationDescription=meal.getMealPreparationDescription();
+        this.mealCaloricValue = meal.getMealCaloricValue();
+        this.mealMacroElements = meal.getMealMacroElements();
+        this.mealIngredients = meal.getMealIngredients();
+        this.mealPreparationDescription = meal.getMealPreparationDescription();
     }
 }

@@ -1,6 +1,5 @@
 package com.GrowWithMe.GrowWithMe.service.impl;
 
-import com.GrowWithMe.GrowWithMe.model.Question;
 import com.GrowWithMe.GrowWithMe.model.Survey;
 import com.GrowWithMe.GrowWithMe.repository.ISurveyRepository;
 import com.GrowWithMe.GrowWithMe.service.ISurveyService;
@@ -14,7 +13,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class SurveyService implements ISurveyService{
+public class SurveyService implements ISurveyService {
     @Autowired
     private ISurveyRepository surveyRepository;
 
@@ -37,7 +36,7 @@ public class SurveyService implements ISurveyService{
     public void deleteSurveyEntity(Integer surveyId) {
         try {
             surveyRepository.deleteById(surveyId);
-        }catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException("Survey entity with id " + surveyId + " not found", e);
         } catch (Exception e) {
             throw new RuntimeException("Error deleting Survey", e);
@@ -48,22 +47,22 @@ public class SurveyService implements ISurveyService{
     public Survey createSurveyEntity(Survey survey) {
         try {
             return surveyRepository.save(survey);
-        }catch (Exception e){
-            throw new RuntimeException("Error in creating new Survey.",e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error in creating new Survey.", e);
         }
     }
 
     @Override
     public Survey updateSurvey(Survey surveyToUpdate) {
-        Optional<Survey> surveyOptional =surveyRepository.findById(surveyToUpdate.getSurveyId());
+        Optional<Survey> surveyOptional = surveyRepository.findById(surveyToUpdate.getSurveyId());
         if (surveyOptional.isPresent()) {
-            Survey survey=surveyOptional.get();
+            Survey survey = surveyOptional.get();
 
-            if (surveyToUpdate.getSurveyName()!=null && !surveyToUpdate.getSurveyName().equals(survey.getSurveyName()))
+            if (surveyToUpdate.getSurveyName() != null && !surveyToUpdate.getSurveyName().equals(survey.getSurveyName()))
                 survey.setSurveyName(surveyToUpdate.getSurveyName());
-            if(surveyToUpdate.getClient()!=null && !Objects.equals(surveyToUpdate.getClient(), survey.getClient()))
+            if (surveyToUpdate.getClient() != null && !Objects.equals(surveyToUpdate.getClient(), survey.getClient()))
                 survey.setClient(surveyToUpdate.getClient());
-            if(surveyToUpdate.getQuestionList()!=null && !surveyToUpdate.getQuestionList().isEmpty() && !Objects.deepEquals(surveyToUpdate.getQuestionList(), survey.getQuestionList()))
+            if (surveyToUpdate.getQuestionList() != null && !surveyToUpdate.getQuestionList().isEmpty() && !Objects.deepEquals(surveyToUpdate.getQuestionList(), survey.getQuestionList()))
                 survey.setQuestionList(surveyToUpdate.getQuestionList());
 
             return surveyRepository.save(survey);

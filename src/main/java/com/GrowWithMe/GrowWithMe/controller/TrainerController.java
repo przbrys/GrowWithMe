@@ -45,21 +45,23 @@ public class TrainerController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTrainerEntity(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteTrainerEntity(@PathVariable Integer id) {
         try {
             trainerService.deleteTrainerById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @PatchMapping
-    public ResponseEntity<Trainer> updateTrainer(@RequestBody Trainer trainerToUpdate){
+    public ResponseEntity<Trainer> updateTrainer(@RequestBody Trainer trainerToUpdate) {
         try {
             Trainer updatedTrainer = trainerService.updateTrainer(trainerToUpdate);
             return new ResponseEntity<>(updatedTrainer, HttpStatus.OK);
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

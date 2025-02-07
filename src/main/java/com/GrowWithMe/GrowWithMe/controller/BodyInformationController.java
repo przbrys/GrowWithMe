@@ -18,39 +18,39 @@ public class BodyInformationController {
     private BodyInformationService bodyInformationService;
 
     @GetMapping
-    public ResponseEntity<List<BodyInformation>> getAllBodyInformation(){
+    public ResponseEntity<List<BodyInformation>> getAllBodyInformation() {
         List<BodyInformation> bodyInformationList = bodyInformationService.getAllBodyInformation();
         return new ResponseEntity<>(bodyInformationList, bodyInformationList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BodyInformation> getBodyInformationById(@PathVariable Integer id){
-        Optional<BodyInformation> bodyInformationOptional=bodyInformationService.getBodyInformationById(id);
+    public ResponseEntity<BodyInformation> getBodyInformationById(@PathVariable Integer id) {
+        Optional<BodyInformation> bodyInformationOptional = bodyInformationService.getBodyInformationById(id);
         return bodyInformationOptional.map(bodyInformation -> new ResponseEntity<>(bodyInformation, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public ResponseEntity<BodyInformation> createBodyInformationEntity(@RequestBody BodyInformation bodyInformation){
-        BodyInformation createdBodyInformationEntity= bodyInformationService.createBodyInformationEntity(bodyInformation);
-        return new ResponseEntity<>(createdBodyInformationEntity,HttpStatus.CREATED);
+    public ResponseEntity<BodyInformation> createBodyInformationEntity(@RequestBody BodyInformation bodyInformation) {
+        BodyInformation createdBodyInformationEntity = bodyInformationService.createBodyInformationEntity(bodyInformation);
+        return new ResponseEntity<>(createdBodyInformationEntity, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBodyInformationEntity(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteBodyInformationEntity(@PathVariable Integer id) {
         try {
             bodyInformationService.deleteBodyInformationEntity(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        }
+    }
 
     @PatchMapping
-    public ResponseEntity<BodyInformation> updateBodyTrainerAdditionalInformation(@RequestBody BodyInformation bodyInformationToUpdate){
+    public ResponseEntity<BodyInformation> updateBodyTrainerAdditionalInformation(@RequestBody BodyInformation bodyInformationToUpdate) {
         try {
-            BodyInformation updatedBodyInformation=bodyInformationService.updateBodyInformation(bodyInformationToUpdate);
+            BodyInformation updatedBodyInformation = bodyInformationService.updateBodyInformation(bodyInformationToUpdate);
             return new ResponseEntity<>(updatedBodyInformation, HttpStatus.OK);
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

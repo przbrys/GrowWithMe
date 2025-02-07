@@ -1,7 +1,6 @@
 package com.GrowWithMe.GrowWithMe.repository;
 
 import com.GrowWithMe.GrowWithMe.model.Client;
-import com.GrowWithMe.GrowWithMe.model.DietPlan;
 import com.GrowWithMe.GrowWithMe.model.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
